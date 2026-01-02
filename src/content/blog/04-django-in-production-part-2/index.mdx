@@ -1,0 +1,230 @@
+---
+title: "Django in Production - II"
+description: "Second part of the series covering how to get your django project into production"
+date: "2020-06-20"
+tags:
+  - django
+  - python
+  - production
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+In the [last post](/post/django-in-production/), we learnt how to make use of Gunicorn to run our Django application, and use Whitenoise to serve static files. Today, we are going to learn how to configure a reverse proxy in front of gunicorn to serve our website on port 80, and also use it as web server to serve our static files instead of using Whitenoise.
+
+## NGINX Installation
+
+If you're using Ubuntu, run the following commands:
+
+```bash
+sudo apt-get update
+sudo apt-get install nginx
+```
+
+Now you can check the status of nginx by running command:
+
+```bash
+sudo systemctl status nginx
+```
+
+or
+
+```bash
+sudo service nginx status
+```
+
+based on how your system is setup.
+
+## NGINX Configuration
+
+So, for running NGINX you'll need to write configuration files. They're stored in the `/etc/nginx/sites-available/` directory.
+
+Let's first go into that directory by running:
+```bash
+cd /etc/nginx/sites-available/
+```
+
+Now let's create a file by doing:
+```bash
+sudo touch django.conf
+```
+
+And now let's open the file in the editor by doing:
+
+```bash
+sudo nano django.conf
+```
+  
+> **Hint**: We need to use `sudo` here because this directory is present in root and not inside our home directory.
+
+Then paste the below config inside it.
+
+```json
+server {                 
+   server_name server_domain_or_ip;
+
+
+   location / {
+      include proxy_params;
+      proxy_pass http://localhost:8000;
+    }
+}
+```
+
+In place of `server_domain_or_ip` you'll put either IP address or the domain of your website.
+
+
+
+So NGINX uses this concept where you can have multiple configuration files as backup stored under `/etc/nginx/sites-available/`. But the active ones are present under `/etc/nginx/sites-enabled/`
+
+So, you put your configuration files under `sites-available` and then create a soft symlink to that file inside `sites-enabled`
+
+So let's create the symlink for this file under `/etc/nginx/sites-enabled/`.
+
+
+To do that, run the following command:
+
+```bash
+cd sites-enabled
+sudo ln -s /etc/nginx/sites-available/django.conf .
+```
+
+This will create the symlink of our config file under sites-enabled.
+
+Now for our changes to come in effect, we'll need to instruct NGINX to read our config file once again and restart the server, we do this by running:
+
+```bash
+sudo systemctl restart nginx
+```
+
+or
+
+```bash
+sudo service nginx restart
+```
+
+## Making our site secure
+
+Right now, our site is being served at port 80, which means http, which isn't secure. But we want our website to be secure. So now let's install SSL certificate for our website using the certificate provided by Let's Encrypt. To do that, follow the steps below:
+
+1. Let's update the packages list to the latest version, before we install our dependencies by running:
+
+```bash
+sudo apt-get update
+```
+
+2. Now let's install our dependencies.
+
+```bash
+sudo apt-get install software-properties
+```
+
+3. Let's add the repository needed for installing the certificate generating utility, by running:
+
+```bash
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+```
+
+4. Now we need to refresh our local packages list, by running:
+
+```bash
+sudo apt-get update
+```
+
+5. Let's finally install the needed packages by running:
+
+```bash
+sudo apt-get install certbot python3-certbot-nginx
+```
+
+6. Now we can create and configure ssl certificates for our nginx configuration:
+
+```bash
+sudo certbot --nginx
+```
+
+When you run the last command, there'll be an interactive CLI program, that'll ask you for certain configuration specifics, one of them will be whether you want to redirect non secure traffic to https, then you should choose Yes.
+
+If you aren't running Ubuntu on your server, then you can use this [website](https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html) to look for instructions for your own OS.
+
+## Serving Static Files using NGINX
+Now that you have finally added NGINX to your stack, you can use it for serving your static files as well, as it can perform much better than the `whitenoise` alternative we discussed earlier.
+
+First, we need to make changes to our Django `settings.py` file, add the below line inside it:
+
+```python
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "/static/"
+```
+
+Make sure, the above settings are not defined elsewhere in your settings.
+
+Now go in your project root directory and create the folder `staticfiles` by typing the following in your terminal:
+
+```bash
+mkdir staticfiles
+```
+
+If you have your own static files (CSS, JS etc.) used in your templates, then pass the path to files (in our case `static`) as follows:
+
+```python
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+```
+
+Now run the following command:
+```bash
+python manage.py collectstatic
+```
+
+Now that we are done setting up our django project, let's configure NGINX to serve these files, go back to the nginx directory by typing the below line:
+
+```bash
+cd /etc/nginx/sites-available/
+sudo nano django.conf
+```
+
+Make the following changes to your config:
+
+```json
+server {                 
+   server_name server_domain_or_ip;
+
+
+   location / {
+      include proxy_params;
+      proxy_pass http://localhost:8000;
+   }
+
+	# Below part is to be added for static files
+	location /static/ {
+        alias /home/ubuntu/path/to/django/project/staticfiles/;
+        expires 365d;
+        autoindex off;
+    }
+
+}
+```
+
+Add the newly added part to your configuration, and make sure to replace `/home/ubuntu/path/to/django/project/` with the actual path where your project is stored.
+
+When you're done, restart the nginx by running:
+
+```bash
+sudo systemctl restart nginx
+```
+
+or 
+
+```bash
+sudo service nginx restart
+```
+
+And we're done serving static files using NGINX.
+
+In the [next post](/blog/03-django-in-production-iii/), we are going to configure a process control system, which will ensure that our gunicorn worker remains up all the time, and starts automatically at boot time.
