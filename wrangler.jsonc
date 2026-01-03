@@ -1,5 +1,16 @@
 {
-  "name": "astro-blog",
+	"main": "dist/_worker.js/index.js",
+	"name": "astro-blog",
   "compatibility_date": "2026-01-02",
-  "pages_build_output_dir": "./dist"
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist"
+	},
+	"observability": {
+    "enabled": true
+  }
 }
