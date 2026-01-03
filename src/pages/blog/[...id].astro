@@ -12,7 +12,15 @@ import Giscus from "@components/Giscus.astro";
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
     .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .map((post) => ({
+      ...post,
+      data: {
+        ...post.data,
+        image: `/og/${post.id}.png`,
+      },
+    }));
+
   return posts.map((post) => ({
     params: { id: post.id },
     props: post,
@@ -50,8 +58,7 @@ const prevPost = getPrevPost();
 const post = Astro.props;
 const { Content, headings } = await render(post);
 ---
-
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.data.title} description={post.data.description} image={post.data.image}>
   <Container>
     <div class="animate">
       <BackToPrevious href="/blog">Back to blog</BackToPrevious>
