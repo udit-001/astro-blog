@@ -8,7 +8,7 @@ backend:
 
 media_folder: "src/content/blog/images" # Folder where uploaded images will be stored
 public_folder: "/content/blog/images" # Public URL of the folder where images are stored  
-
+site_url: "https://astro.uditmittal.com"
 collections:
   - name: "blog"
     label: "Blog"
