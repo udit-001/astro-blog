@@ -4,9 +4,15 @@ import mdx from "@astrojs/mdx";
 import pagefind from "astro-pagefind";
 import tailwindcss from "@tailwindcss/vite";
 
+console.log(process.env)
+
+const site =
+  process.env.CF_PAGES_URL ??
+  "http://localhost:4321";
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astro-micro.vercel.app",
+  site,
   integrations: [sitemap(), mdx(), pagefind()],
 
   vite: {
