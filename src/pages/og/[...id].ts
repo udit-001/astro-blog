@@ -9,10 +9,12 @@ export const { getStaticPaths, GET } = OGImageRoute({
   param: 'id',
   pages: pages,
 
+
   getImageOptions: (path, page) => {
     return {
       title: page.title,
-      description: page.description
+      description: page.description,
+      bgGradient: [[23, 23, 23]]
     }
   },
 });
