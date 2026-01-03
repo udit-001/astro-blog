@@ -1,0 +1,23 @@
+backend:
+  name: github
+  branch: blog # change this to your branch
+  repo: udit-001/astro-blog # change this to your repo
+  site_domain: astro.uditmittal.com # change this to your domain
+  base_url: https://astro.uditmittal.com # change this to your prod URL
+  auth_endpoint: oauth # the oauth route provided by the integration
+
+media_folder: "src/content/blog/images" # Folder where uploaded images will be stored
+public_folder: "/content/blog/images" # Public URL of the folder where images are stored  
+
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "src/content/blog" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured Image", name: "thumbnail", widget: "image" }
+      - { label: "Rating (scale of 1-5)", name: "rating", widget: "number" }
+      - { label: "Body", name: "body", widget: "markdown" }

@@ -6,6 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 import metaTags from "astro-meta-tags";
 
+import decapCmsOauth from "astro-decap-cms-oauth";
+
 const site =
   process.env.CF_PAGES_URL ??
   "http://localhost:4321";
@@ -13,7 +15,11 @@ const site =
 // https://astro.build/config
 export default defineConfig({
   site,
-  integrations: [sitemap(), mdx(), pagefind(), metaTags()],
+  integrations: [sitemap(), mdx(), pagefind(), metaTags(),
+      decapCmsOauth({
+        decapCMSSrcUrl: "https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js",
+      }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
