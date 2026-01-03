@@ -4,7 +4,7 @@ import mdx from "@astrojs/mdx";
 import pagefind from "astro-pagefind";
 import tailwindcss from "@tailwindcss/vite";
 
-console.log(process.env)
+import metaTags from "astro-meta-tags";
 
 const site =
   process.env.CF_PAGES_URL ??
@@ -13,7 +13,7 @@ const site =
 // https://astro.build/config
 export default defineConfig({
   site,
-  integrations: [sitemap(), mdx(), pagefind()],
+  integrations: [sitemap(), mdx(), pagefind(), metaTags()],
 
   vite: {
     plugins: [tailwindcss()],
