@@ -26,7 +26,7 @@ collections:
     slug: "{{slug}}"
     icon: "article"
     path: "{{slug}}/index"
-    media_folder: "{{slug}}"
+    media_folder: "."
     public_folder: ""
     preview_path: "blog/{{slug}}"
     create: true
