@@ -15,7 +15,7 @@ pip list --outdated
 ```
 
 This will display an output similar to one shown below:
-![](https://res.cloudinary.com/idiomprog/image/upload/v1600082493/Idiomatic%20Programmers/package-list.png)
+![](package-list.png)
 
 Then you can proceed to update the packages as per your needs. For example we can update `virtualenv` package as follows:
 
@@ -43,7 +43,7 @@ safety check
 
 This will output the packages with known vulnerabilities similar to the one shown below:
 
-![](https://res.cloudinary.com/idiomprog/image/upload/v1600082493/Idiomatic%20Programmers/safety-check.png)
+![](safety-check.png)
 
 Then you can proceed to update the packages with security updates by using commands such as:
 
