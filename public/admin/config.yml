@@ -30,6 +30,13 @@ collections:
     public_folder: ""
     preview_path: "blog/{{slug}}"
     create: true
+    view_filters:
+      - label: Drafts
+        field: draft
+        pattern: true
+      - label: Published
+        field: draft
+        pattern: false
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }
