@@ -17,6 +17,8 @@ collections:
     slug: "{{slug}}"
     icon: "article"
     path: "{{slug}}/index"
+    media_folder: "{{slug}}"
+    public_folder: ""
     create: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
