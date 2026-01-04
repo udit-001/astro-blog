@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"bookmarks">;
 
 const bookmark = Astro.props;
-const { Content, headings } = await render(bookmark);
+const { Content } = await render(bookmark);
 ---
 
 <Layout title={bookmark.data.title} description={bookmark.data.excerpt? bookmark.data.excerpt : ''}>
@@ -31,16 +31,24 @@ const { Content, headings } = await render(bookmark);
         <div class="font-base text-sm">
           <FormattedDate date={bookmark.data.readDate} />
         </div>
-        &bull;
-        {bookmark.body && (
-          <div class="font-base text-sm">
-            {readingTime(bookmark.body)}
-          </div>
-        )}
       </div>
       <h1 class="text-3xl font-semibold text-black dark:text-white">
         {bookmark.data.title}
       </h1>
+        {
+        bookmark.data.tags && bookmark.data.tags?.length > 0 ? (
+          <div class="animate flex gap-2 pt-2 pb-5">
+            {bookmark.data.tags.map((tag) => (
+              <a
+                href={`/tags/${tag}`}
+                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        ) : null
+      }
       <Link href={bookmark.data.url} external>
         {bookmark.data.url}
       </Link>
