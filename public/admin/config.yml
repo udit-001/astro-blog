@@ -36,7 +36,7 @@ collections:
         pattern: true
       - label: Published
         field: draft
-        pattern: false
+        pattern: "^$|false"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }
