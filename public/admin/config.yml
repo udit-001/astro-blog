@@ -29,3 +29,14 @@ collections:
           field: { label: "Tag", name: "tag", widget: "string" }
         }
       - { label: "Body", name: "body", widget: "markdown" }
+  - name: "bookmarks"
+    label: "Bookmarks"
+    label_singular: "Bookmark"
+    folder: "src/content/bookmarks"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "URL", name: "url", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Read Date", name: "readDate", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
