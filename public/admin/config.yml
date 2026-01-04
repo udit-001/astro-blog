@@ -27,6 +27,7 @@ collections:
           label: "Tags",
           name: "tags",
           widget: "list",
+          required: false,
           field: { label: "Tag", name: "tag", widget: "string" }
         }
       - { label: "Body", name: "body", widget: "markdown" }
@@ -39,6 +40,6 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "URL", name: "url", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
       - { label: "Read Date", name: "readDate", widget: "datetime" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Body", name: "body", widget: "markdown",  required: false }
