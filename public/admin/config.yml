@@ -20,6 +20,14 @@ collections:
     media_folder: "{{slug}}"
     public_folder: ""
     create: true
+    commit_messages:
+      create: "content(cms): create {{collection}}/{{slug}}"
+      update: "content(cms): update {{collection}}/{{slug}}"
+      delete: "content(cms): delete {{collection}}/{{slug}}"
+      publish: "content(cms): publish {{collection}}/{{slug}}"
+      unpublish: "content(cms): unpublish {{collection}}/{{slug}}"
+      uploadMedia: "content(cms): add media {{path}}"
+      deleteMedia: "content(cms): remove media {{path}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }
