@@ -5,6 +5,14 @@ backend:
   site_domain: astro.uditmittal.com
   base_url: https://astro.uditmittal.com
   auth_endpoint: oauth
+  commit_messages:
+    create: "content(cms): create {{collection}}/{{slug}}"
+    update: "content(cms): update {{collection}}/{{slug}}"
+    delete: "content(cms): delete {{collection}}/{{slug}}"
+    publish: "content(cms): publish {{collection}}/{{slug}}"
+    unpublish: "content(cms): unpublish {{collection}}/{{slug}}"
+    uploadMedia: "content(cms): add media {{path}}"
+    deleteMedia: "content(cms): remove media {{path}}"
 
 media_folder: "src/content/blog/images" # Folder where uploaded images will be stored
 public_folder: "/content/blog/images" # Public URL of the folder where images are stored  
@@ -20,14 +28,6 @@ collections:
     media_folder: "{{slug}}"
     public_folder: ""
     create: true
-    commit_messages:
-      create: "content(cms): create {{collection}}/{{slug}}"
-      update: "content(cms): update {{collection}}/{{slug}}"
-      delete: "content(cms): delete {{collection}}/{{slug}}"
-      publish: "content(cms): publish {{collection}}/{{slug}}"
-      unpublish: "content(cms): unpublish {{collection}}/{{slug}}"
-      uploadMedia: "content(cms): add media {{path}}"
-      deleteMedia: "content(cms): remove media {{path}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }
