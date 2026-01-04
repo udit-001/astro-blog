@@ -1,0 +1,59 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import { readingTime } from "@lib/utils";
+import BackToPrevious from "@components/BackToPrevious.astro";
+import Link from "@components/Link.astro";
+
+export async function getStaticPaths() {
+  const bookmarks = (await getCollection("bookmarks"))
+    .sort((a, b) => b.data.readDate.valueOf() - a.data.readDate.valueOf());
+  return bookmarks.map((bookmark) => ({
+    params: { id: bookmark.id },
+    props: bookmark,
+  }));
+}
+type Props = CollectionEntry<"bookmarks">;
+
+const bookmark = Astro.props;
+const { Content, headings } = await render(bookmark);
+---
+
+<Layout title={bookmark.data.title} description={bookmark.data.excerpt? bookmark.data.excerpt : ''}>
+  <Container>
+    <div class="animate">
+      <BackToPrevious href="/bookmarks">Back to bookmarks</BackToPrevious>
+    </div>
+    <div class="animate my-10 space-y-1">
+      <div class="flex items-center gap-1.5">
+        <div class="font-base text-sm">
+          <FormattedDate date={bookmark.data.readDate} />
+        </div>
+        &bull;
+        {bookmark.body && (
+          <div class="font-base text-sm">
+            {readingTime(bookmark.body)}
+          </div>
+        )}
+      </div>
+      <h1 class="text-3xl font-semibold text-black dark:text-white">
+        {bookmark.data.title}
+      </h1>
+      <Link href={bookmark.data.url} external>
+        {bookmark.data.url}
+      </Link>
+      {bookmark.data.excerpt && (
+        <p class="mt-4 text-base text-slate-700 dark:text-slate-300">
+          {bookmark.data.excerpt}
+        </p>
+      )}
+    </div>
+    {bookmark.body && (
+      <article class="animate">
+        <Content />
+      </article>
+    )}
+  </Container>
+</Layout>
