@@ -37,6 +37,13 @@ collections:
       - label: Published
         field: draft
         pattern: "^$|false"
+    view_groups:
+      - label: "Published"
+        field: draft
+        pattern: "^$|false"
+      - label: "Drafts"
+        field: draft
+        pattern: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }
