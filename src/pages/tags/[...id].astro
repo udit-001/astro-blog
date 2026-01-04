@@ -8,11 +8,15 @@ import BackToPrevious from "@components/BackToPrevious.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  const bookmarks = await getCollection("bookmarks", ({ data }) => !data.draft);
+  const bookmarks = await getCollection("bookmarks");
 
   // Get unique tags
-  const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
-
+  const tags = [
+    ...new Set([
+      ...posts.flatMap((post) => post.data.tags || []),
+      ...bookmarks.flatMap((bookmark) => bookmark.data.tags || []),
+    ]),
+  ].sort();
   // Create paths for each tag
   return tags.map((tag) => ({
     params: { id: tag },
@@ -40,18 +44,22 @@ const sortedBookmarks = bookmarks.sort(
   <Container>
     <div class="space-y-10" data-pagefind-ignore>
       <BackToPrevious href="/tags"> All tags </BackToPrevious>
-      <h1 class="animate font-semibold text-black dark:text-white">
-        Posts tagged with "{id}"
-      </h1>
-      <ul class="animate flex flex-col gap-4">
-        {sortedPosts.map((post) => <ArrowCard entry={post} />)}
-      </ul>
-      <h1 class="animate font-semibold text-black dark:text-white">
-        Bookmarks tagged with "{id}"
-      </h1>
-      <ul class="animate flex flex-col gap-4">
+      {sortedPosts.length > 0 && (
+        <h1 class="animate font-semibold text-black dark:text-white">
+          Posts tagged with "{id}"
+        </h1>
+        <ul class="animate flex flex-col gap-4">
+          {sortedPosts.map((post) => <ArrowCard entry={post} />)}
+        </ul>
+      )}
+      {sortedBookmarks.length > 0 && (
+        <h1 class="animate font-semibold text-black dark:text-white">
+          Bookmarks tagged with "{id}"
+        </h1>
+        <ul class="animate flex flex-col gap-4">
         {sortedBookmarks.map((bookmark) => <BookmarkCard entry={bookmark} />)}
       </ul>
+    )}
     </div>
   </Container>
 </Layout>

@@ -4,8 +4,13 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 
 const posts = await getCollection("blog", ({ data }) => !data.draft);
-const bookmarks = await getCollection("bookmarks", ({ data }) => true);
-const tags = [...new Set([...posts.flatMap((post) => post.data.tags || []), ...bookmarks.flatMap((bookmark) => bookmark.data.tags || [])])].sort();
+const bookmarks = await getCollection("bookmarks");
+const tags = [
+  ...new Set([
+    ...posts.flatMap((post) => post.data.tags || []),
+    ...bookmarks.flatMap((bookmark) => bookmark.data.tags || []),
+  ]),
+].sort();
 ---
 
 <Layout title="Tags" description="List of tags used.">
