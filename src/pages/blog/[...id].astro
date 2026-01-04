@@ -17,7 +17,7 @@ export async function getStaticPaths() {
       ...post,
       data: {
         ...post.data,
-        image: `/og/${post.id}.png`,
+        image: `/og-image/${post.id}.png`,
       },
     }));
 
