@@ -8,10 +8,6 @@ tags:
   - production
 ---
 
-import Callout from "@/components/Callout.astro";
-
----
-
 In the [last post](/post/django-in-production/), we learnt how to make use of Gunicorn to run our Django application, and use Whitenoise to serve static files. Today, we are going to learn how to configure a reverse proxy in front of gunicorn to serve our website on port 80, and also use it as web server to serve our static files instead of using Whitenoise.
 
 ## NGINX Installation
