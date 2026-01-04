@@ -15,6 +15,7 @@ collections:
     label_singular: "Post"
     folder: "src/content/blog"
     slug: "{{slug}}"
+    icon: "article"
     path: "{{slug}}/index"
     create: true
     fields:
