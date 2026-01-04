@@ -413,7 +413,7 @@ So, now that we've explored how to search for data using Django-Watson, it's tim
 ```
 
 4. **The Final View**: And there you have it! This is what the final search view will look like, allowing your users to search for content in your blog.
-   ![](https://res.cloudinary.com/idiomprog/image/upload/v1698692841/blog_search_watson.png)
+   ![](blog_search_watson.png)
 
 ## Additional Details
 
@@ -448,7 +448,7 @@ Word stemming is a handy technique used in search and text analysis. It simplifi
 
 Let me give you an example with the word "create." When we use word stemming, it transforms "create" into its basic form, which is "creat"
 
-![](https://res.cloudinary.com/idiomprog/image/upload/v1698688276/word_embeddings_qnboec.png)
+![](word_embeddings_qnboec.png)
 
 In the world of search and text analysis, word stemming is like your trusty sidekick. It helps us find what we're looking for by matching different forms of words. So, when you search for "create," it's not just looking for that exact word. It's also finding documents with "created" or "creating," which makes your search super effective.
 
