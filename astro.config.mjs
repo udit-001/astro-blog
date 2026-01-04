@@ -18,7 +18,9 @@ const site =
 export default defineConfig({
   site,
 
-  integrations: [sitemap(), mdx(), pagefind(), metaTags(), decapCmsOauth()],
+  integrations: [sitemap(), mdx(), pagefind(), metaTags(), decapCmsOauth({
+      decapCMSSrcUrl: "https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js",
+  })],
 
   vite: {
     plugins: [tailwindcss()],
