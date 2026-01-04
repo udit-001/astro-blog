@@ -1,13 +1,12 @@
 ---
-title: "Important Flask Extensions You Should Use"
-description: "A post listing all the important Flask extensions to use in production."
-date: "2019-12-15"
+title: Important Flask Extensions You Should Use
+description: A post listing all the important Flask extensions to use in production.
+date: 2019-12-15
 tags:
   - security
   - python
   - flask
 ---
-
 When you start learning web development with Python, you are most likely to stumble upon Flask and Django. After doing some research you might realize that you don't need Django for your small web app that you want to do some fun stuff with. Then you decide to move ahead with Flask, because it seemed much more approachable than Django for beginners.
 
 You might finish creating your fun project using Flask, but after some time you may decide to deploy it on a web server and let people access your web app publicly. But before you go ahead and do it, I would advise you to read the [Security considerations](https://flask.palletsprojects.com/en/1.1.x/security/ "Security Considerations") highlighted in the flask official documentation.
