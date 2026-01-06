@@ -75,3 +75,27 @@ collections:
           field: { label: "Tag", name: "tag", widget: "string" }
         }
       - { label: "Body", name: "body", widget: "markdown",  required: false }
+  - name: "Prompts"
+    label: "Prompts"
+    label_singular: "Prompt"
+    folder: "src/content/prompts"
+    slug: "{{slug}}"
+    icon: "chat_paste_go"
+    sortable_fields:
+      fields: [title, date]
+      default:
+        field: date
+        direction: descending
+    preview_path: "prompts/{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm", default: "{{now}}" }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          required: false,
+          field: { label: "Tag", name: "tag", widget: "string" }
+        }
+      - { label: "Body", name: "body", widget: "markdown",  required: false }
