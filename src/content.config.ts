@@ -33,6 +33,7 @@ const bookmarks = defineCollection({
     readDate: z.coerce.date(),
     url: z.string().url(),
     tags: z.array(z.string()).optional(),
+    image: z.string().optional(),
   }),
 });
 
@@ -45,6 +46,7 @@ const prompts = defineCollection({
     date: z.coerce.date(),
     draft: z.boolean().optional(),
     tags: z.array(z.string()).optional(),
+    image: z.string().optional(),
   }),
 });
 

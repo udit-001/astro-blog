@@ -8,7 +8,14 @@ import Link from "@components/Link.astro";
 
 export async function getStaticPaths() {
   const bookmarks = (await getCollection("bookmarks"))
-    .sort((a, b) => b.data.readDate.valueOf() - a.data.readDate.valueOf());
+    .sort((a, b) => b.data.readDate.valueOf() - a.data.readDate.valueOf())
+    .map((bookmark) => ({
+      ...bookmark,
+      data: {
+        ...bookmark.data,
+        image: `/og-image/bookmarks/${bookmark.id}.png`,
+      },
+    }));
   return bookmarks.map((bookmark) => ({
     params: { id: bookmark.id },
     props: bookmark,
@@ -20,7 +27,7 @@ const bookmark = Astro.props;
 const { Content } = await render(bookmark);
 ---
 
-<Layout title={bookmark.data.title} description={bookmark.data.excerpt? bookmark.data.excerpt : ''}>
+<Layout title={bookmark.data.title} description={bookmark.data.excerpt? bookmark.data.excerpt : ''} image={bookmark.data.image}>
   <Container>
     <div class="animate">
       <BackToPrevious href="/bookmarks">Back to bookmarks</BackToPrevious>
