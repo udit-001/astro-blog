@@ -30,6 +30,11 @@ export const BOOKMARKS: Metadata = {
   DESCRIPTION: "A collection of bookmarked articles and resources.",
 };
 
+export const PROMPTS: Metadata = {
+  TITLE: "Prompts",
+  DESCRIPTION: "A collection of my curated prompts.",
+};
+
 export const SOCIALS: Socials = [
   {
     NAME: "X (formerly Twitter)",

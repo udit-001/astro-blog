@@ -1,0 +1,36 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { PROMPTS } from "@consts";
+
+const data = (await getCollection("prompts"))
+  .filter((prompt) => !prompt.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const prompts = (await getCollection("prompts"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Layout title={PROMPTS.TITLE} description={PROMPTS.DESCRIPTION}>
+  <Container>
+    <aside data-pagefind-ignore>
+      <div class="space-y-10">
+        <div class="animate font-semibold text-black dark:text-white">
+          Prompts
+        </div>
+        <ul class="animate not-prose flex flex-col gap-4">
+          {
+            prompts.map((prompt) => (
+              <li>
+                    <ArrowCard
+                        entry={prompt}
+                    />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </aside>
+  </Container>
+</Layout>

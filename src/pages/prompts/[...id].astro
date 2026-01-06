@@ -1,0 +1,59 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import BackToPrevious from "@components/BackToPrevious.astro";
+import Link from "@components/Link.astro";
+import { PROMPTS } from "@consts";
+
+export async function getStaticPaths() {
+  const prompts = (await getCollection("prompts"))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return prompts.map((prompt) => ({
+    params: { id: prompt.id },
+    props: prompt,
+  }));
+}
+type Props = CollectionEntry<"prompts">;
+
+const prompt = Astro.props;
+const { Content } = await render(prompt);
+---
+
+<Layout title={prompt.data.title} description={PROMPTS.DESCRIPTION}>
+  <Container>
+    <div class="animate">
+      <BackToPrevious href="/prompts">Back to prompts</BackToPrevious>
+    </div>
+    <div class="animate my-10 space-y-1">
+      <div class="flex items-center gap-1.5">
+        <div class="font-base text-sm">
+          <FormattedDate date={prompt.data.date} />
+        </div>
+      </div>
+      <h1 class="text-3xl font-semibold text-black dark:text-white">
+        {prompt.data.title}
+      </h1>
+        {
+        prompt.data.tags && prompt.data.tags?.length > 0 ? (
+          <div class="animate flex gap-2 pt-2 pb-5">
+            {prompt.data.tags.map((tag) => (
+              <a
+                href={`/tags/${tag}`}
+                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        ) : null
+      }
+    </div>
+    {prompt.body && (
+      <article class="animate">
+        <Content />
+      </article>
+    )}
+  </Container>
+</Layout>
