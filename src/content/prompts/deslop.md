@@ -2,7 +2,8 @@
 title: Deslop
 description: ''
 date: 2026-01-11T20:48:00+05:30
-tags: []
+tags:
+  - claude-code
 ---
 ```markdown
 # Remove AI code slop
