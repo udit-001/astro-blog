@@ -31,6 +31,70 @@ import Search from "astro-pagefind/components/Search";
 </aside>
 
 <script is:inline>
+  // Badge color configuration
+  const BADGE_COLORS = {
+    blog: {
+      light: {
+        backgroundColor: 'rgb(59 130 246 / 0.2)',
+        color: 'rgb(30 64 128)',
+        border: '1px solid rgb(59 130 246 / 0.4)'
+      },
+      dark: {
+        backgroundColor: 'rgb(59 130 246 / 0.35)',
+        color: 'rgb(147 197 253)',
+        border: '1px solid rgb(59 130 246 / 0.5)'
+      }
+    },
+    video: {
+      light: {
+        backgroundColor: 'rgb(239 68 68 / 0.12)',
+        color: 'rgb(185 28 28)',
+        border: '1px solid rgb(239 68 68 / 0.25)'
+      },
+      dark: {
+        backgroundColor: 'rgb(239 68 68 / 0.25)',
+        color: 'rgb(252 165 165)',
+        border: '1px solid rgb(239 68 68 / 0.4)'
+      }
+    },
+    bookmark: {
+      light: {
+        backgroundColor: 'rgb(16 185 129 / 0.12)',
+        color: 'rgb(5 122 85)',
+        border: '1px solid rgb(16 185 129 / 0.25)'
+      },
+      dark: {
+        backgroundColor: 'rgb(16 185 129 / 0.25)',
+        color: 'rgb(134 239 172)',
+        border: '1px solid rgb(16 185 129 / 0.4)'
+      }
+    },
+    prompt: {
+      light: {
+        backgroundColor: 'rgb(245 158 11 / 0.12)',
+        color: 'rgb(180 83 9)',
+        border: '1px solid rgb(245 158 11 / 0.25)'
+      },
+      dark: {
+        backgroundColor: 'rgb(245 158 11 / 0.25)',
+        color: 'rgb(251 191 36)',
+        border: '1px solid rgb(245 158 11 / 0.4)'
+      }
+    },
+    project: {
+      light: {
+        backgroundColor: 'rgb(139 92 246 / 0.12)',
+        color: 'rgb(91 33 182)',
+        border: '1px solid rgb(139 92 246 / 0.25)'
+      },
+      dark: {
+        backgroundColor: 'rgb(139 92 246 / 0.25)',
+        color: 'rgb(196 181 253)',
+        border: '1px solid rgb(139 92 246 / 0.4)'
+      }
+    }
+  };
+
   const magnifyingGlass = document.getElementById("magnifying-glass");
   const backdrop = document.getElementById("backdrop");
 
@@ -50,6 +114,121 @@ import Search from "astro-pagefind/components/Search";
     backdrop?.classList.remove("visible");
     backdrop?.classList.add("invisible");
   }
+
+  // Function to get content type from URL (fallback)
+  function getContentTypeFromUrl(url) {
+    if (url.includes('/blog/')) return 'blog';
+    if (url.includes('/videos/')) return 'video';
+    if (url.includes('/bookmarks/')) return 'bookmark';
+    if (url.includes('/prompts/')) return 'prompt';
+    if (url.includes('/projects/')) return 'project';
+    return null;
+  }
+
+  // Function to create content type badge using configuration
+  function createContentTypeBadge(type) {
+    const badge = document.createElement('span');
+    badge.className = 'pagefind-content-type-badge';
+    badge.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+
+    const isDarkTheme = document.documentElement.classList.contains('dark');
+    const theme = isDarkTheme ? 'dark' : 'light';
+    const colors = BADGE_COLORS[type]?.[theme];
+
+    if (colors) {
+      badge.style.backgroundColor = colors.backgroundColor;
+      badge.style.color = colors.color;
+      badge.style.border = colors.border;
+    }
+
+    return badge;
+  }
+
+  // Function to add content type badges to search results
+  function addContentTypeBadges() {
+    const searchResults = document.querySelectorAll('.pagefind-ui__result');
+    searchResults.forEach(result => {
+      // Check if badge already exists
+      if (result.querySelector('.pagefind-content-type-badge')) {
+        return;
+      }
+
+      const link = result.querySelector('.pagefind-ui__result-link');
+      if (link) {
+        const url = link.getAttribute('href');
+        const contentType = getContentTypeFromUrl(url);
+
+        if (contentType) {
+          const badge = createContentTypeBadge(contentType);
+          const titleElement = result.querySelector('.pagefind-ui__result-title');
+
+          if (titleElement) {
+            titleElement.style.display = 'flex';
+            titleElement.style.alignItems = 'center';
+            titleElement.style.gap = '8px';
+            titleElement.appendChild(badge);
+          }
+        }
+      }
+    });
+  }
+
+  // Monitor for changes in search results
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length > 0) {
+        addContentTypeBadges();
+      }
+    });
+  });
+
+  // Update badges when theme changes
+  function updateBadgesForTheme() {
+    const existingBadges = document.querySelectorAll('.pagefind-content-type-badge');
+    existingBadges.forEach(badge => {
+      const resultElement = badge.closest('.pagefind-ui__result');
+      const link = resultElement?.querySelector('.pagefind-ui__result-link');
+      if (link) {
+        const url = link.getAttribute('href');
+        const contentType = getContentTypeFromUrl(url);
+        if (contentType) {
+          const newBadge = createContentTypeBadge(contentType);
+          // Update existing badge with new theme colors
+          badge.style.backgroundColor = newBadge.style.backgroundColor;
+          badge.style.color = newBadge.style.color;
+          badge.style.border = newBadge.style.border;
+        }
+      }
+     })
+  }
+
+   // Watch for theme changes
+  const themeObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        updateBadgesForTheme();
+      }
+    });
+  });
+
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  // Start observing the search container
+  const searchContainer = document.getElementById('search');
+  if (searchContainer) {
+    observer.observe(searchContainer, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  // Update badges after initial load in case theme was already set
+  setTimeout(() => {
+    updateBadgesForTheme();
+  }, 100);
 
   // open pagefind
   magnifyingGlass?.addEventListener("click", () => {
@@ -128,5 +307,20 @@ import Search from "astro-pagefind/components/Search";
   #search .pagefind-ui__message {
     padding: 0;
     padding-bottom: 0.75rem;
+  }
+
+  .pagefind-content-type-badge {
+    font-size: 0.625rem;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .pagefind-content-type-badge:hover {
+    opacity: 0.8;
   }
 </style>
