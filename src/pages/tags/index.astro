@@ -6,16 +6,18 @@ import Container from "@components/Container.astro";
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const prompts = await getCollection("prompts", ({ data }) => !data.draft);
 const bookmarks = await getCollection("bookmarks");
+const videos = await getCollection("videos", ({ data }) => !data.draft);
 const tags = [
   ...new Set([
     ...posts.flatMap((post) => post.data.tags || []),
     ...bookmarks.flatMap((bookmark) => bookmark.data.tags || []),
     ...prompts.flatMap((prompt) => prompt.data.tags || []),
+    ...videos.flatMap((video) => video.data.tags || []),
   ]),
 ].sort();
 ---
 
-<Layout title="Tags" description="List of tags used.">
+<Layout title="Tags" description="List of tags used." image="/og-image/tags.png">
   <Container>
     <div class="space-y-10">
       <h1 class="animate font-semibold">All Tags</h1>
@@ -28,7 +30,7 @@ const tags = [
             >
               {tag}{" "}
               <span class="text-sm text-gray-600">
-                ({posts.filter((post) => post.data.tags?.includes(tag)).length + bookmarks.filter((bookmark) => bookmark.data.tags?.includes(tag)).length + prompts.filter((prompt) => prompt.data.tags?.includes(tag)).length})
+                ({posts.filter((post) => post.data.tags?.includes(tag)).length + bookmarks.filter((bookmark) => bookmark.data.tags?.includes(tag)).length + prompts.filter((prompt) => prompt.data.tags?.includes(tag)).length + videos.filter((video) => video.data.tags?.includes(tag)).length})
               </span>
             </a>
           ))

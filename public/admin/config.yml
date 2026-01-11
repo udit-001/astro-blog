@@ -99,3 +99,30 @@ collections:
           field: { label: "Tag", name: "tag", widget: "string" }
         }
       - { label: "Body", name: "body", widget: "markdown",  required: false }
+  - name: "videos"
+    label: "Videos"
+    label_singular: "Video"
+    folder: "src/content/videos"
+    slug: "{{slug}}"
+    icon: "smart_display"
+    create: true
+    sortable_fields:
+      fields: [title, date]
+      default:
+        field: date
+        direction: descending
+    preview_path: "videos/{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "YouTube URL", name: "url", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm", default: "{{now}}" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          required: false,
+          field: { label: "Tag", name: "tag", widget: "string" }
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }

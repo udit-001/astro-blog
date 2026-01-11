@@ -50,4 +50,17 @@ const prompts = defineCollection({
   }),
 });
 
-export const collections = { blog, projects, bookmarks, prompts };
+const videos = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: "./src/content/videos" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    date: z.coerce.date(),
+    draft: z.boolean().optional(),
+    url: z.string().url(),
+    tags: z.array(z.string()).optional(),
+    image: z.string().optional()
+  }),
+});
+
+export const collections = { blog, projects, bookmarks, prompts, videos };

@@ -1,0 +1,100 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import BackToPrevious from "@components/BackToPrevious.astro";
+import VideoNavigation from "@components/VideoNavigation.astro";
+import { YouTube } from "astro-embed";
+import { VIDEOS } from "@consts";
+
+export async function getStaticPaths() {
+  const videos = (await getCollection("videos"))
+    .filter((video) => !video.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .map((video) => ({
+      ...video,
+      data: {
+        ...video.data,
+        image: `/og-image/videos/${video.id}.png`,
+      },
+    }));
+
+  return videos.map((video) => ({
+    params: { id: video.id },
+    props: video,
+  }));
+}
+type Props = CollectionEntry<"videos">;
+
+const videos = (await getCollection("videos"))
+  .filter((video) => !video.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function getNextVideo() {
+  let videoIndex;
+  for (const video of videos) {
+    if (video.id === Astro.params.id) {
+      videoIndex = videos.indexOf(video);
+      return videos[videoIndex + 1];
+    }
+  }
+}
+
+function getPrevVideo() {
+  let videoIndex;
+  for (const video of videos) {
+    if (video.id === Astro.params.id) {
+      videoIndex = videos.indexOf(video);
+      return videos[videoIndex - 1];
+    }
+  }
+}
+
+const nextVideo = getNextVideo();
+const prevVideo = getPrevVideo();
+
+const video = Astro.props;
+const { Content } = await render(video);
+---
+
+<Layout title={video.data.title} description={video.data.description || VIDEOS.DESCRIPTION} image={video.data.image}>
+  <Container>
+    <div class="animate">
+      <BackToPrevious href="/videos">Back to videos</BackToPrevious>
+    </div>
+    <div class="animate my-10 space-y-1">
+      <div class="flex items-center gap-1.5">
+        <div class="font-base text-sm">
+          <FormattedDate date={video.data.date} />
+        </div>
+      </div>
+      <h1 class="text-3xl font-semibold text-black dark:text-white">
+        {video.data.title}
+      </h1>
+      {video.data.tags && video.data.tags?.length > 0 && (
+        <div class="animate flex gap-2 pt-2">
+          {video.data.tags.map((tag) => (
+            <a
+              href={`/tags/${tag}`}
+              class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+            >
+              {tag}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+    <div class="animate mb-6">
+      <YouTube id={video.data.url} />
+    </div>
+    {video.body && (
+      <article class="animate">
+        <Content />
+      </article>
+    )}
+    <div class="mt-24">
+      <VideoNavigation prevVideo={prevVideo} nextVideo={nextVideo} />
+    </div>
+  </Container>
+</Layout>

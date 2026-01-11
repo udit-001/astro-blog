@@ -2,27 +2,25 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
-import { PROMPTS } from "@consts";
+import VideoCard from "@components/VideoCard.astro";
+import { VIDEOS } from "@consts";
 
-const prompts = (await getCollection("prompts"))
-  .filter((prompt) => !prompt.data.draft)
+const videos = (await getCollection("videos"))
+  .filter((video) => !video.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Layout title={PROMPTS.TITLE} description={PROMPTS.DESCRIPTION} image="/og-image/prompts.png">
+<Layout title={VIDEOS.TITLE} description={VIDEOS.DESCRIPTION} image="/og-image/videos.png">
   <Container>
     <aside data-pagefind-ignore>
       <div class="space-y-10">
         <div class="animate font-semibold text-black dark:text-white">
-          Prompts
+          Videos
         </div>
-        <ul class="animate not-prose flex flex-col gap-4">
+        <ul class="animate not-prose grid grid-cols-1 gap-4 sm:grid-cols-2">
           {
-            prompts.map((prompt) => (
+            videos.map((video) => (
               <li>
-                    <ArrowCard
-                        entry={prompt}
-                    />
+                <VideoCard entry={video} />
               </li>
             ))
           }

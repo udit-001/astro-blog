@@ -1,8 +1,10 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import { SITE, HOME } from "@consts";
+import { SITE } from "@consts";
 import ArrowCard from "@components/ArrowCard.astro";
+import VideoCard from "@components/VideoCard.astro";
+import BookmarkCard from "@components/BookmarkCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 
@@ -10,9 +12,23 @@ const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+
+const videos = (await getCollection("videos"))
+  .filter((video) => !video.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const bookmarks = (await getCollection("bookmarks"))
+  .sort((a, b) => b.data.readDate.valueOf() - a.data.readDate.valueOf())
+  .slice(0, 4);
+
+const prompts = (await getCollection("prompts"))
+  .filter((prompt) => !prompt.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
 ---
 
-<Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+<Layout title={SITE.TITLE} description={SITE.DESCRIPTION} image="/og-image/home.png">
   <Container>
     <aside data-pagefind-ignore>
       <div class="space-y-16">
@@ -34,6 +50,66 @@ const blog = (await getCollection("blog"))
             }
           </ul>
         </section>
+
+        {bookmarks.length > 0 && (
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-y-2">
+              <h2 class="font-semibold text-black dark:text-white">
+                Bookmarks
+              </h2>
+              <Link href="/bookmarks"> See all bookmarks </Link>
+            </div>
+            <ul class="not-prose flex flex-col gap-4">
+              {
+                bookmarks.map((bookmark) => (
+                  <li>
+                    <BookmarkCard entry={bookmark} />
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+        )}
+
+        {prompts.length > 0 && (
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-y-2">
+              <h2 class="font-semibold text-black dark:text-white">
+                Prompts
+              </h2>
+              <Link href="/prompts"> See all prompts </Link>
+            </div>
+            <ul class="not-prose flex flex-col gap-4">
+              {
+                prompts.map((prompt) => (
+                  <li>
+                    <ArrowCard entry={prompt} />
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+        )}
+
+        {videos.length > 0 && (
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-y-2">
+              <h2 class="font-semibold text-black dark:text-white">
+                Videos
+              </h2>
+              <Link href="/videos"> See all videos </Link>
+            </div>
+            <ul class="not-prose grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {
+                videos.map((video) => (
+                  <li>
+                    <VideoCard entry={video} />
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+        )}
       </div>
     </aside>
   </Container>

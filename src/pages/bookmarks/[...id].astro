@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import FormattedDate from "@components/FormattedDate.astro";
 import BackToPrevious from "@components/BackToPrevious.astro";
+import BookmarkNavigation from "@components/BookmarkNavigation.astro";
 import Link from "@components/Link.astro";
 
 export async function getStaticPaths() {
@@ -16,12 +17,39 @@ export async function getStaticPaths() {
         image: `/og-image/bookmarks/${bookmark.id}.png`,
       },
     }));
+
   return bookmarks.map((bookmark) => ({
     params: { id: bookmark.id },
     props: bookmark,
   }));
 }
 type Props = CollectionEntry<"bookmarks">;
+
+const bookmarks = (await getCollection("bookmarks"))
+  .sort((a, b) => b.data.readDate.valueOf() - a.data.readDate.valueOf());
+
+function getNextBookmark() {
+  let bookmarkIndex;
+  for (const bookmark of bookmarks) {
+    if (bookmark.id === Astro.params.id) {
+      bookmarkIndex = bookmarks.indexOf(bookmark);
+      return bookmarks[bookmarkIndex + 1];
+    }
+  }
+}
+
+function getPrevBookmark() {
+  let bookmarkIndex;
+  for (const bookmark of bookmarks) {
+    if (bookmark.id === Astro.params.id) {
+      bookmarkIndex = bookmarks.indexOf(bookmark);
+      return bookmarks[bookmarkIndex - 1];
+    }
+  }
+}
+
+const nextBookmark = getNextBookmark();
+const prevBookmark = getPrevBookmark();
 
 const bookmark = Astro.props;
 const { Content } = await render(bookmark);
@@ -69,5 +97,8 @@ const { Content } = await render(bookmark);
         <Content />
       </article>
     )}
+    <div class="mt-24">
+      <BookmarkNavigation prevBookmark={prevBookmark} nextBookmark={nextBookmark} />
+    </div>
   </Container>
 </Layout>

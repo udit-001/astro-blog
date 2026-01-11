@@ -9,7 +9,7 @@ const bookmarks = (await getCollection("bookmarks"))
   .sort((a, b) => b.data.readDate.valueOf() - a.data.readDate.valueOf());
 ---
 
-<Layout title={BOOKMARKS.TITLE} description={BOOKMARKS.DESCRIPTION}>
+<Layout title={BOOKMARKS.TITLE} description={BOOKMARKS.DESCRIPTION} image="/og-image/bookmarks.png">
   <Container>
     <aside data-pagefind-ignore>
       <div class="space-y-10">
