@@ -1,0 +1,140 @@
+---
+title: "Part 7: Give the Agent Its Own Desk"
+description: "One folder per project — the simple habit that keeps your agent focused, safe, and findable across sessions"
+date: 2026-08-12
+tags:
+  - opencode
+  - ai
+  - beginner
+  - ai-coding-series
+---
+
+import Callout from "@components/Callout.astro";
+
+Back in [Part 3](/blog/your-first-data-task-with-opencode/), the very first step was *"create a folder for this little project."* You probably did it without thinking — it seemed obvious. This is **Part 7**: why that step was the most important one in the series, and the single habit that keeps opencode sharp, safe, and findable as you take on more projects.
+
+Here's the idea in one sentence: **start opencode in a folder that holds exactly one project — and nothing else.**
+
+<Callout type="info">
+  **The folder is the agent's desk.** opencode can only read and edit files inside the folder you launch it from; everything outside is invisible to it until you attach tools that reach further (like [Part 5's](/blog/extend-opencode-with-mcp/)). The folder you choose is the entire world you're handing it — treat it like a colleague's desk: one project's papers, nothing else.
+</Callout>
+
+## Why it matters
+
+Three reasons, in order of how fast you'll feel them.
+
+**1. The agent sees only what you intend.** If you launch opencode from a folder stuffed with all your files — spreadsheets, old reports, half-finished things — it can't tell which of them are "the project." Ask it to fix the sales data and it might pick the wrong sales data, or "helpfully" touch something unrelated. Start it inside the project's own folder and there's no guessing: the files in front of it are the project.
+
+**2. A clean desk, a focused agent.** An agent works inside a budget of attention, and every extra file it can see costs a little of it. A folder full of unrelated files burns that budget scanning things that don't matter. A folder that holds only this project means everything the agent notices is relevant.
+
+**3. Sessions become findable.** The session-search plugin we set up in [Part 2](/blog/install-opencode-on-windows/) labels every session by the folder it ran in. With one folder per project, *"continue the sales report"* points at exactly one obvious session. Run everything from one folder and every session wears the same label — search becomes guesswork.
+
+And a bonus that's really the same point viewed from the other side: a project folder **keeps mistakes contained.** If the agent does something wrong, the blast radius is that one folder — not your whole home directory, where it could reach documents, downloads, and whatever else sits in its path.
+
+## What good looks like
+
+The whole habit is three small things:
+
+- **One folder per project**, named after the project — `sales-report`, `website-copy`, `monthly-dashboard`.
+- **Start opencode inside it** — open the project folder in **File Explorer**, click on an empty spot inside it, **right-click**, and choose **Open in Terminal** (on Windows 10, hold **Shift** while right-clicking, then choose **Open PowerShell window here**). A terminal opens already standing in that folder — type `opencode` and press **Enter**.
+- **Keep the project's files there**, where the agent can see them: the messy data, your notes, the file you want cleaned.
+
+<details>
+<summary>Prefer typing? The terminal way</summary>
+
+The same step, for people who like commands — `cd` into the project folder, then run opencode:
+
+```bash
+cd sales-report
+opencode
+```
+
+The only thing that matters is *where* opencode starts, not whether you got there by mouse or by typing. If you're ever told to "run opencode from the project folder," this is what that means.
+</details>
+
+That's it. No settings, no config, nothing to install. The discipline fits in one line: *one desk per project, and start each session at that desk.*
+
+## A two-minute exercise
+
+To feel why this matters, run this once:
+
+1. Make two folders, `task-alpha` and `task-beta`, and drop a different file into each.
+2. Start opencode in `task-alpha` and paste:
+
+```text
+List the files you can see right now, then read the one I gave you and
+summarize it in one sentence.
+```
+
+3. Exit, then do the same for `task-beta` — open it in File Explorer, right-click an empty spot inside it, **Open in Terminal** — and ask the same thing.
+
+You'll watch opencode know *exactly one world* at a time — the same reason the agent that fixes your report will never try to fix your invoices too.
+
+<Callout type="tip">
+  The mistake that teaches this fastest: running opencode from the folder where you keep *everything.* Try it once on purpose — with a throwaway folder, not your real files — and ask *"what files can you see here?"* The moment it lists projects that have nothing to do with each other, the habit will click on its own.
+</Callout>
+
+## Where the project folder lives
+
+Does it matter *where* on the computer the folder sits? Not really. Two things matter instead:
+
+- It's easy for you to find again — your Documents area, or wherever you already keep that kind of work.
+- **Each project gets its own folder** — the agent starts inside that folder, not inside a catch-all.
+
+One folder per project, opencode started inside it. Future-you, wondering *"did we ever sort out the X task?"*, will thank you — and so will the session-search plugin.
+
+## Watch how full its attention is
+
+An agent has a visible attention meter: opencode keeps a running count of how many tokens the current session has used — a number alongside a percentage (and the cost so far), shown in the session's status area. Your version may show it slightly differently, but the idea is the same: you don't need to babysit it, just *notice* it:
+
+- Once a session is past about half-full on a serious task, the agent can start dropping details it saw earlier, or forgetting a file you mentioned near the beginning.
+- More than the number, trust that feeling of a conversation getting unmanageable: if you can't follow the thread anymore, the agent probably can't either.
+
+The fix is never to push deeper into a crowded session — it's to end it and start a fresh one, then point the new session at the plan file we set up below. A new session begins with a full budget.
+
+## One session, one task
+
+The second habit is a rule about sessions, not folders: **give each session one job, and open a new session for the next one.**
+
+- *"Clean the sales CSV"* is one job; *"then draft the email about it"* is a second. Refuse the urge to tack the second onto the first — start a fresh session.
+- Sessions are cheap to start; bloated ones are expensive to use.
+- It keeps your past sessions findable: the [session-search plugin from Part 2](/blog/install-opencode-on-windows/) indexes them by what they contain, and a session titled `sales report` that actually contains the email drafting and a folder tidy-up is a session nobody — human or agent — can find later.
+
+Start every session from a clean desk: one folder, one job, full attention budget.
+
+## Big tasks: write the plan down
+
+Some jobs are too big for one session — a full month-end report, a cleanup plus write-up plus delivery, a multi-part migration. Neither you nor the agent should hold the whole thing in memory. The fix is to make the plan a **file**, not a memory.
+
+When the task is big, first ask the agent to break it into steps:
+
+```text
+This is a big task. Break it into small steps and write them as a plan into
+PLAN.md in this folder — each step one or two lines, with a checkbox.
+Then work through them in order, ticking each one off as you go.
+```
+
+Now the plan lives in the project folder — and this is exactly where the earlier habit pays off again: the plan has a natural home, one per desk. Tomorrow, next week, or after a completely fresh session, you just say:
+
+> *"Open PLAN.md and continue from the first unchecked step."*
+
+Because the plan is a file, it survives everything memory can't: long sessions, fresh sessions, a week's gap. The plan is remembered as long as the project folder exists.
+
+<Callout type="tip">
+  A little task-tracking hygiene goes a long way. Keep each step to one line with a checkbox, let the agent tick steps off as it finishes them, and start each new session by pointing at the plan — *"work through the next two items in PLAN.md."* When the job is done, delete the file — a finished project folder should hold the work, not the scaffolding.
+</Callout>
+
+---
+
+## The bigger picture
+
+Look at what you've built across the series:
+
+- [Part 3](/blog/your-first-data-task-with-opencode/) — you did a real task.
+- [Part 4](/blog/teach-opencode-skills/) — opencode learned your method for repeated tasks.
+- [Part 5](/blog/extend-opencode-with-mcp/) — it reached the outside world.
+- [Part 6](/blog/write-better-prompts/) — you learned to talk to it precisely.
+
+This part adds the frame around all of it, plus the two habits that keep the frame clean: every one of those powers works best inside its own folder, one job per session, and big jobs reduced to a plan file in the project folder so nothing depends on anyone's memory. Not the most glamorous lessons in the series — but they're the difference between an agent that seems to know where things are and one that's rummaging through your entire desk.
+
+Where to next? For more on how opencode scopes itself to the folder you start it in and what it considers visible, the [opencode docs](https://opencode.ai/docs) are the place to go deeper.
