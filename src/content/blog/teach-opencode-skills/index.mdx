@@ -1,0 +1,167 @@
+---
+title: "Part 4: Teach OpenCode Your Methods with Skills"
+description: "Package a recurring task into a reusable skill so opencode does it your way every time"
+date: 2026-08-15
+tags:
+  - opencode
+  - ai
+  - beginner
+  - ai-coding-series
+---
+
+import Callout from "@components/Callout.astro";
+
+In [Part 3](/blog/your-first-data-task-with-opencode/), you gave opencode a task and it did it. But here's the honest catch: if you ask for that *same* kind of task tomorrow, it starts basically from scratch — it doesn't remember how you like it done. This is **Part 4**: we'll give it a memory and a method, so it does repetitive work *your* way every single time.
+
+The mechanism is called a **skill**.
+
+<Callout type="info">
+  **A skill** is a short written playbook you hand the agent once. It's a file that says *"when someone asks for something like this, here's exactly how you should do it."* Think of it as a standard operating procedure (SOP) for your AI.
+</Callout>
+
+## Why bother
+
+Without a skill, every request is a fresh improvisation. With a skill, three things change:
+
+- **Consistency** — it follows your preferred method every time, instead of wandering.
+- **Speed** — you don't re-explain the process each time; you just point at the skill.
+- **Quality** — it does it the *proven* way, not whatever it happens to think of.
+
+For data people this is gold. You have recurring chores — cleaning messy CSVs, standardising date formats, running a fixed reporting routine. Those are exactly what a skill captures.
+
+## Prompt vs. skill: what's the difference?
+
+You've gotten a lot of mileage out of prompts already in this series — a great prompt tells opencode exactly what to do. So why save a skill instead of just pasting the prompt again?
+
+**A prompt is a one-off instruction. A skill is a saved one.**
+
+Think of it like asking a colleague for help. A prompt is emailing them the steps every time. A skill is writing the steps down once in a shared doc — the first time is a little effort, but every time after, you just say two words and they check the doc on their own.
+
+| | Prompt | Skill |
+| --- | --- | --- |
+| When | Paste it each time | Saved once, loaded automatically |
+| Effort per task | Whole paragraph every time | A few words |
+| Inconsistent? | Improvises fresh each time | Follows your method |
+
+So use prompts for one-off things; reach for a skill when it's a task you keep doing. Prompt = *"do this now."* Skill = *"do this, my way, every time."*
+
+## The shape of a skill
+
+A skill is the simplest file you'll ever write: a Markdown file named `SKILL.md`, sitting in a folder, with a little header at the top. It's a text file — no programming involved.
+
+This is what one looks like (for cleaning CSVs, a task you'd recognise from Part 3):
+
+```md
+---
+name: csv-clean
+description: Clean messy CSV exports — fix dates, handle empty rows and "NA" values
+---
+
+## What I do
+- Standardise date formats into YYYY-MM-DD
+- Drop fully-empty rows and handle "NA" values consistently
+- Keep the original file untouched; save a cleaned copy
+
+## When to use me
+Use this whenever someone hands over a messy CSV and asks to tidy it up.
+```
+
+That's the whole thing. Two named fields up top (`name` and `description`), then plain-English instructions.
+
+## Where to put it, and how it works
+
+Skills live in a `skills` folder inside your project, e.g. `.opencode/skills/csv-clean/SKILL.md` — one folder per skill, with the folder and the `name` matching.
+
+Once it's there:
+
+1. You're working on a real task in opencode.
+2. You say something like: *"Clean this sales CSV"*.
+3. opencode sees a skill called `csv-clean` whose description matches, loads it, and follows your playbook.
+
+You don't have to do anything technical at run time — just mention the task and it picks up the matching skill.
+
+<Callout type="warning">
+  The `name` has to match the folder, and it must be lowercase with hyphens (no spaces, no capitals) — e.g. `csv-clean`, not `CSV Clean`. The `description` matters most for matching, so make it describe *when* to use the skill, not just what it is.
+</Callout>
+
+## Your first skill
+
+Here's a small, satisfying experiment to make it stick — a skill for a monthly ritual many analysts know. The best part: **you don't create any folders or files yourself.** You hand opencode a copy-paste instruction and it does the setup.
+
+Copy this into opencode:
+
+```text
+Create a skill called "monthly-report" for me, inside this project.
+
+Put a SKILL.md file at .opencode/skills/monthly-report/SKILL.md with this content:
+
+---
+name: monthly-report
+description: Prepare a concise monthly sales report from raw exports
+---
+
+## What I do
+- Load the latest monthly export
+- Summarise by region and highlight the top 5 customers
+- Flag any totals that look wrong or inconsistent
+- Output a short plain-English summary I can read in a minute
+
+## When to use me
+Use this for the monthly sales wrap-up.
+
+Make sure the .opencode/skills/monthly-report folder and SKILL.md file exist,
+then tell me when it's done.
+```
+
+opencode creates the hidden `.opencode` folder and the `SKILL.md` file for you — you never have to hunt for them in a file explorer. (If you ever do want to peek, remember folders starting with a dot are hidden by default in Windows Explorer.)
+
+Once it's in place, run it by saying:
+
+> *"Run the monthly-report skill on last month's file."*
+
+It should follow your exact steps — and next month, you run the same one line.
+
+## Install a skill from elsewhere
+
+You don't have to write every skill yourself — people share them. And the neat part: **you can let opencode install a skill for you**, the same way you let it set up MCP servers in Part 5. Copy a prompt, paste it in, and it fetches and saves the skill.
+
+Skills you install once into your *user* folder (rather than a single project) are available in every project you open from then on. The path is `~/.config/opencode/skills/` — the `~` just means your home folder; on Windows type `%USERPROFILE%` in its place if you ever browse for it.
+
+Here's a genuinely useful one to try — a **grilling** skill that makes opencode interrogate your decisions before you act on them, instead of just agreeing with you. Because some skills reference other files beside the main one, the reliable way to install is to have opencode clone the skill's repo and copy the whole skill folder across:
+
+```text
+Install the "grilling" skill for me at the user level (globally), keeping all
+its referenced files so it works fully.
+
+Clone the repo to a temporary location:
+https://github.com/mattpocock/skills
+
+Then copy the entire skill folder, including every file it references, from:
+  <temp-repo>/skills/productivity/grilling
+to:
+  ~/.config/opencode/skills/grilling
+
+Copy the whole folder (SKILL.md and any sibling files such as an "agents/"
+directory or other references), not just SKILL.md. Remove the temporary clone
+when done. Then tell me it's ready.
+```
+
+Once it's installed, opencode sees a `grilling` skill and will use it whenever you say the word — e.g.:
+
+> *"Grill me on this plan."*
+
+Why it's worth having: agents have a habit of agreeing with whatever you propose. This one pushes back, asks the sharp questions, and stress-tests your thinking before you commit — a genuinely useful check for a data analyst deciding between approaches.
+
+<Callout type="tip">
+  That same shape installs almost any shared skill: point the agent at a skill's repo and folder, and it clones, copies, and cleans up for you — no file hunting on your part. Same copy-paste idea you saw in Part 5.
+</Callout>
+
+## The big picture
+
+You now control *how* the agent works, not just what it does:
+
+- Parts 1–3: it does tasks.
+- **This part:** it learns *your* method for recurring tasks.
+- Part 5: it reaches the outside world (web + browser).
+
+That's a genuinely capable assistant — one that does your chores, your way, reliably. You can read more in the [official skills docs](https://opencode.ai/docs/skills/).

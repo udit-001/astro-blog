@@ -1,0 +1,70 @@
+---
+title: "Part 1: From ChatGPT to opencode — Doing Work, Not Just Asking"
+description: "How terminal-based AI agents like opencode differ from chatting with ChatGPT — and why that makes them better at real work"
+date: 2026-08-18
+tags:
+  - opencode
+  - ai
+  - agents
+  - ai-coding-series
+---
+
+import Callout from "@components/Callout.astro";
+
+If you already use ChatGPT to help with code, you know the dance: paste a question or a snippet, read the answer, copy it back into your project, hope it fits. It works — up to a point.
+
+[opencode](https://opencode.ai) works differently, and once that clicks, it's hard to go back. This is the **first post** of a short series introducing you to AI-assisted coding — no programming background needed. It's a big-picture look at a shift that matters: **you stop posting questions to an assistant, and start handing work to an agent.** In [Part 2](/blog/install-opencode-on-windows/) you'll install opencode so you can follow along with the rest.
+
+<Callout type="info">
+  Quick orientation — a **chatbot** answers. An **agent** actually does things in your project. This post is about making the shift from treating opencode like a chatbot to using it as an agent.
+</Callout>
+
+## The difference in one sentence
+
+**ChatGPT is a brilliant co-worker who only talks. opencode is that same co-worker, handed the keys to your project** — it can open your files, change them, run commands, test its own work, and come back when it's finished.
+
+Practically, that changes your role. With ChatGPT, *you* are the one doing all the choreography: pasting code, saving edits, running the tests, checking if it worked. With opencode, the agent does the choreography — you direct it and check the result.
+
+## What an agent can do that a chat can't
+
+Here's the concrete gap that matters for "do work" tasks:
+
+- **It edits your actual files.** You don't paste a diff in; tell it what to change and it changes the real files on disk.
+- **It sees your whole project, not just one snippet.** It reads surrounding code, so edits fit how your code actually is — not how its training data roughly pretends.
+- **It runs commands.** It can run a script, run a test, or check something and read the output.
+- **It can go back and forth on its own.** It notices a step failed, fixes it, retries — without making you relay every message.
+
+<Callout type="warning">
+  Worth being honest about: an agent can also make wrong changes. The secret is that you stay in charge — you review what it did before trusting it. More on that below.
+</Callout>
+
+## When ChatGPT is still the right tool
+
+An agent is not always better. Keep ChatGPT (or a quick web chat) for these:
+
+- **Quick lookups** — "what does this error mean?", "remind me of the syntax for X."
+- **One-off questions** — you want an explanation, not a change.
+- **Things you don't want touching your files** — brainstorming, discussing approaches, drafting ideas before anything is committed.
+
+Positive rule of thumb: **if the outcome you want is a change to your project, reach for an agent. If it's just knowledge, a chat is fine.**
+
+## How to ask an agent for work (the prompting shift)
+
+Chat prompts and agent prompts sound different. Compare:
+
+- **Chat-style:** "Here's my query, is it correct?" — you want a *judgment* back.
+- **Agent-style:** "My query is slow and I have this data. Make it faster, and tell me what you changed." — you want a *done thing*.
+
+A few patterns that make agents perform well:
+
+- **Give it a goal, not a request for an opinion.** State the outcome: "clean this CSV and give me the top 5 customers by region." Leave it to work out how.
+- **Let it use the project.** If opencode is running from your project folder, it can read what's relevant. Run [`/init`](https://opencode.ai/docs/) in a project once so it builds an understanding first.
+- **Say what "done" looks like.** "Fix the X, and run the test to confirm" — it knows when to stop.
+- **Check its work.** Read the diff or the summary it gives. You don't have to understand every line — but skim what it changed before trusting it.
+- **If it stalls, add constraints.** "Don't touch this file", "use Excel formulas, not Python now", "keep it simple."
+
+## Your role hasn't vanished — it changed
+
+The valuable part of your job isn't typing. It's *deciding what needs to happen* and *judging whether the result is right*. Those two things are exactly what you keep. OpenCode handles the typing and the fiddly mechanics.
+
+In [Part 3](/blog/your-first-data-task-with-opencode/), we'll walk through one whole real task end to end — a messy CSV your inner data person will recognize — so you can see the pattern in action rather than abstractly.

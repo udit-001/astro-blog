@@ -1,0 +1,208 @@
+---
+title: "Part 2: Install OpenCode on Windows"
+description: "Get OpenCode installed and have your first chat — with winget, no coding background needed"
+date: 2026-08-17
+tags:
+  - opencode
+  - windows
+  - winget
+  - ai-coding-series
+---
+
+import Callout from "@components/Callout.astro";
+
+[OpenCode](https://opencode.ai) is an AI assistant that lives inside a terminal window and can help you with data work, writing, and coding tasks — you talk to it, and it answers. If you've never used a terminal or installed anything by typing commands, this guide is for you. Every step is in plain language, and you just copy and paste.
+
+This guide is **Part 2** of a short series introducing you to AI-assisted coding. [Part 1](/blog/from-chatgpt-to-opencode/) explained how an AI agent differs from a chatbot; this post gets you set up and having your first chat. [Part 3](/blog/your-first-data-task-with-opencode/) walks through a real first task.
+
+<details>
+<summary>A note for complete beginners</summary>
+
+A **terminal** is a window where you type text commands instead of clicking buttons. When it opens, you'll see a `> ` symbol and a blinking cursor. That's where you paste the commands in this guide.
+
+To paste: copy the command, then **right-click** inside the terminal (or press `Ctrl+V`), and press **Enter**.
+
+The commands can look like a foreign language, but they all mean the same simple thing: *"go and install this for me."* You'll be comfortable after the first two.
+</details>
+
+## What we're installing, and why
+
+OpenCode is the tool you'll use. To run it, your computer needs three supporting pieces first — think of them as ingredients for a recipe:
+
+- **Windows Terminal** — the window where you'll talk to OpenCode ([download](https://aka.ms/terminal))
+- **Node.js** — the engine that runs OpenCode's code ([download](https://nodejs.org))
+- **Git** — a behind-the-scenes helper OpenCode uses to keep track of changes safely ([download](https://git-scm.com))
+
+You won't download these by hand. A built-in Windows tool called **winget** (an app store for your terminal) installs them all with one command each ([more on winget](https://learn.microsoft.com/en-us/windows/package-manager/)).
+
+<Callout type="info">
+  winget comes built into Windows 11. On Windows 10, install the free [App Installer](https://www.microsoft.com/en-us/p/app-installer/9nblggh4nns1) app from the Microsoft Store first.
+</Callout>
+
+## Step 1: Open a terminal
+
+1. Press the **Windows key** on your keyboard.
+2. Type **Terminal** in the search box.
+3. Click **Windows Terminal** (or **Terminal**).
+
+Leave this window open — we'll use it for every step. If Windows asks for permission, click **Yes**.
+
+## Step 2: Make sure winget is up to date
+
+Copy, paste, press **Enter**:
+
+```bash
+winget upgrade winget --accept-source-agreements
+```
+
+<Callout type="info">
+  The `--accept-source-agreements` and `--accept-package-agreements` flags simply say "yes to the terms" so the install doesn't pause to ask.
+</Callout>
+
+If you see "winget is not recognized," install **App Installer** from the Microsoft Store, then come back.
+
+## Step 3: Install Windows Terminal
+
+Windows Terminal is usually already there on Windows 11, but run this to be sure:
+
+```bash
+winget install --id Microsoft.WindowsTerminal --accept-source-agreements --accept-package-agreements
+```
+
+You'll see a progress bar while it downloads. `--id Microsoft.WindowsTerminal` is just the exact name of what you're installing.
+
+## Step 4: Install Node.js and Git
+
+Now the engine and the helper. Run these one at a time — paste the first line, press Enter, wait for it to finish, then the second:
+
+```bash
+winget install --id OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements
+```
+
+```bash
+winget install --id Git.Git --accept-source-agreements --accept-package-agreements
+```
+
+<Callout type="info">
+  Once these finish, **close this terminal window and open a new one** before continuing. This gives Windows a moment to make Git and Node available. If the next step complains, a fresh window usually fixes it.
+</Callout>
+
+## Step 5: Install OpenCode
+
+Now the main event:
+
+```bash
+npm install -g opencode-ai
+```
+
+`npm` is a tool that comes free with Node.js (installed in Step 4) and is how OpenCode is handed out. `-g` just means "installed once, available everywhere." This may take a minute or two — that's normal.
+
+## Step 6: Check it worked
+
+Open a **new** terminal window (close the old one first), then:
+
+```bash
+opencode --version
+```
+
+If you see a version number — something like `0.1.0` — you're done. **OpenCode is now installed and working.**
+
+---
+
+## Now that OpenCode is running, what can you do?
+
+Here's the encouraging part: you don't need any planning to start. Just type `opencode` in a terminal and press Enter:
+
+```bash
+opencode
+```
+
+When you first run it, opencode walks you through connecting a model provider. You can start with a free model to try things out, so don't worry about paying for anything yet.
+
+Think of OpenCode as a helpful colleague you can hand tasks to in plain English. Some things data people actually use it for:
+
+- **Explain something** — *"Explain this SQL query to me in plain terms."*
+- **Fix something** — *"My query is slow, look at it and tell me why."*
+- **Crunch data** — *"Here's a CSV of sales. Clean it up and tell me my top 5 customers."*
+- **Write formulas** — *"Write me an Excel formula that finds the average sales per region."*
+- **Turn ideas into code** — *"Write a short script that reads this spreadsheet and summarizes it."*
+
+### Try a quick task
+
+To check you're actually using it (not just running it), give OpenCode this simple instruction:
+
+> *"Answer in one sentence: what can you help me with?"*
+
+If it replies (even a few words), you're fully set up. That's your proof it works.
+
+For more ideas, OpencCode's own docs at [opencode.ai/docs](https://opencode.ai/docs) are the best place to start exploring.
+
+---
+
+## Optional: Make Git Bash your default shell
+
+When you installed Git in Step 4, you also got something called **Git Bash** — a version of the terminal that understands helper commands some AI features use. It comes free with Git, so nothing new to install.
+
+It's optional, but recommended if you plan to use OpenCode regularly, because a few things work more smoothly in it. If you'd rather not change how your terminal behaves, skip this section — everything above still works.
+
+To switch:
+
+1. Press **Ctrl + ,** (hold Ctrl, press the comma key) to open Windows Terminal settings.
+2. Click **Startup** in the left menu.
+3. Under **Default profile**, choose **Git Bash**.
+
+That's it — new terminal windows now open in Git Bash. For more on Windows Terminal, see [the official Windows Terminal docs](https://learn.microsoft.com/en-us/windows/terminal/).
+
+## Optional: Install Python (via uv)
+
+If you want to do Python work too, there's a tidy helper called **uv** that installs and organizes Python for you. Purely optional — skip if you only came for OpenCode.
+
+```bash
+winget install --id astral-sh.uv --accept-source-agreements --accept-package-agreements
+```
+
+Then let uv fetch Python:
+
+```bash
+uv python install 3.12
+```
+
+That's all. uv handles Python for you, no installers or path fiddling. See [docs.astral.sh/uv](https://docs.astral.sh/uv) for more.
+
+## Optional: Stop Python from opening the Microsoft Store
+
+On some Windows setups, typing `python` opens a Microsoft Store page instead of running Python, because of two small decoy shortcuts (`python.exe` and `python3.exe`). If that ever happens to you, turn them off in Settings — no commands needed:
+
+1. Open **Settings** (press the **Windows key**, then click **Settings**).
+2. Go to **Apps** → **Advanced app settings** → **App execution aliases**.
+3. Turn **off** both **Python** and **Python3**.
+
+That's it — typing `python` will now use your real Python instead of opening the Store.
+
+<details>
+<summary>Prefer a command? (more technical)</summary>
+
+You can achieve the same thing by removing those two alias files from PowerShell:
+
+```powershell
+Remove-Item "$env:LOCALAPPDATA\Microsoft\WindowsApps\python*.exe"
+```
+
+</details>
+
+<Callout type="warning">
+  Either way, only touch the two Python aliases/files. Do **not** delete the whole `WindowsApps` folder — other harmless shortcuts live there, and breaking them causes problems elsewhere.
+</Callout>
+
+---
+
+## If something goes wrong
+
+Most issues share the same simple cause and fix:
+
+1. **"X is not recognized"** — close your terminal and open a **brand new** window, then retry. Windows only picks up newly installed tools in fresh windows.
+2. **Still nothing? Reboot.** Restart your computer once and retry — this makes sure Windows notices everything it installed.
+3. **`opencode` still not recognized after that** — this is less common; search the web for "opencode npm not recognized Windows" for a quick targeted fix.
+4. **Anything else** — OpenCode's docs at [opencode.ai/docs](https://opencode.ai/docs) cover this in more depth.
+
+Remember: nothing here can permanently break your computer. If a step doesn't work, the worst case is you close the window and try again. There's nothing to be afraid of.
