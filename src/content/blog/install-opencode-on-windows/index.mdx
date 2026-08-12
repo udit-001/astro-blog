@@ -137,6 +137,36 @@ If it replies (even a few words), you're fully set up. That's your proof it work
 
 For more ideas, OpencCode's own docs at [opencode.ai/docs](https://opencode.ai/docs) are the best place to start exploring.
 
+### Give it a memory of past sessions (optional)
+
+By default, OpenCode only sees the conversation in front of it. A free plugin called **session search** gives it a memory: once installed, OpenCode can list your past sessions, search them, and read them back — so *"pick up where we left off yesterday"* actually works.
+
+Installing a plugin looks just like any other task — you paste a plain-English instruction and it does the rest. With OpenCode still running, paste this:
+
+```text
+Install the opencode-session-search plugin on my machine by downloading and
+running its official installer:
+
+curl -fsSL https://raw.githubusercontent.com/largelanguagemeowing/opencode-session-search/main/scripts/install.sh | bash
+
+The installer downloads the release archive, saves session-search.js to
+~/.config/opencode/plugins/, and makes sure ~/.config/opencode/package.json
+includes @opencode-ai/plugin. No opencode.json edit is needed. Tell me once it's
+installed and ready.
+```
+
+<Callout type="tip">
+  On Windows this installer needs **Git Bash** — the helper that came with Git back in Step 4. If OpenCode's terminal says `bash` isn't recognized, follow the [optional Git Bash section](#optional-make-git-bash-your-default-shell) further down, or add one line to your instruction: *"run the install command in Git Bash and tell me the result."*
+</Callout>
+
+OpenCode loads plugins when it starts, so one last step: **close OpenCode (type `/exit`, or press `Ctrl+C` twice), then run `opencode` again.** The new memory tools are ready the moment it opens.
+
+To check it worked, ask it:
+
+> *"List my past sessions."*
+
+If it returns a list (or says there are none yet), the plugin is live. From now on you can say things like *"continue the session where we worked on the sales data"* and it can find it.
+
 ---
 
 ## Optional: Make Git Bash your default shell
