@@ -13,14 +13,14 @@ import Callout from "@components/Callout.astro";
 
 By now you've used opencode to do real work: [Part 3](/blog/your-first-data-task-with-opencode/) had it clean a CSV and answer a question about it. But so far opencode only really knows two things: the files in front of it, and whatever its training taught it.
 
-That's about to change. In this **Part 5**, you're going to give it the ability to **reach the outside world**, and that's where things get genuinely exciting.
+That's about to change. In this **Part 5**, you're going to give it the ability to **reach the outside world**, and that's where things get exciting.
 
 Picture what your agent could do for you tomorrow:
 
-- **Answer questions that need today's data** — *"What are the latest quarterly earnings for these five companies, and who's growing fastest?"* It searches the live web, pulls real figures, and cites sources, not a guess from memory.
-- **Bring you a morning briefing** — *"Scan today's news on retail, summarize the top 5 stories, and save me a short brief."* It reads a dozen articles and hands you one clean summary.
-- **Go get data that has no "export" button** — *"Open our supplier's public dashboard, navigate to last month, and copy the table into my workbook."* It drives a real browser, clicks around, and retrieves what you need.
-- **Archive evidence for your reports** — *"Save this page as a PDF"* or *"grab that competitor's pricing table as a CSV."*
+- **Answer questions that need today's data**: *"What are the latest quarterly earnings for these five companies, and who's growing fastest?"* It searches the live web, pulls real figures, and cites sources, not a guess from memory.
+- **Bring you a morning briefing**: *"Scan today's news on retail, summarize the top 5 stories, and save me a short brief."* It reads a dozen articles and hands you one clean summary.
+- **Go get data that has no "export" button**: *"Open our supplier's public dashboard, navigate to last month, and copy the table into my workbook."* It drives a real browser, clicks around, and retrieves what you need.
+- **Archive evidence for your reports**: *"Save this page as a PDF"* or *"grab that competitor's pricing table as a CSV."*
 
 Each of those is exactly the kind of task you've been doing by hand (checking figures, gathering sources, pulling data), now on autopilot. And none of it needs you to be a programmer.
 
@@ -38,11 +38,11 @@ MCP servers are declared in opencode's config file, called `opencode.json`, sitt
 
 Both servers below get added under the same top-level `"mcp"` block, alongside whatever's already there.
 
-## Server 1: Exa — live web search
+## Server 1: Exa (live web search)
 
-Exa is the most useful add-on for "answer a current question" work. Without it, opencode answers from memory; with it, it can search the web and read pages in real time, so you can ask *"what are the current revenue numbers for these three companies?"* and get today's answer, not a stale one.
+For "answer a current question" work, Exa is the add-on you want. Without it, opencode answers from memory; with it, it can search the web and read pages in real time, so you can ask *"what are the current revenue numbers for these three companies?"* and get today's answer, not a stale one.
 
-**Easiest way — have opencode set it up for you.** Copy this, open opencode, paste it in and let it edit its own config:
+**Easiest way: have opencode set it up for you.** Copy this, open opencode, paste it in and let it edit its own config:
 
 ```text
 Add the Exa MCP server to my opencode config so I can search the web live.
@@ -81,13 +81,13 @@ Exa has a free tier, so you can start without configuring billing. Restart openc
 
 You should see it reach out and come back with sourced answers. Official docs: [exa.ai/docs/reference/exa-mcp](https://exa.ai/docs/reference/exa-mcp).
 
-## Server 2: Playwright — browser automation
+## Server 2: Playwright (browser automation)
 
 Where Exa reads the web, **Playwright** *drives* it: it can open a browser, go to a page, scroll, fill forms, log in, and copy the results. That's huge for data work: grabbing something from a site that has no easy export button, grabbing a table off a dashboard, or checking a live page.
 
 Playwright is a local server, so it spawns a real browser on your machine.
 
-**Easiest way — have opencode set it up for you.** Same trick as Exa: copy this, paste it into opencode, and it installs the server:
+**Easiest way: have opencode set it up for you.** Same trick as Exa: copy this, paste it into opencode, and it installs the server:
 
 ```text
 Add the Playwright MCP server to my opencode config so I can control a browser.
@@ -114,8 +114,8 @@ Prefer to do it by hand? Add it like this:
 
 Differences from Exa at a glance:
 
-- `"type": "local"` — the server runs on *your* computer rather than on a hosted URL.
-- `"command"` — how opencode starts it. `npx @playwright/mcp@latest` fetches and runs the Playwright server. The browser itself downloads automatically the first time you use it.
+- `"type": "local"`: the server runs on *your* computer rather than on a hosted URL.
+- `"command"`: how opencode starts it. `npx @playwright/mcp@latest` fetches and runs the Playwright server. The browser itself downloads automatically the first time you use it.
 
 By default it opens a **visible** browser window (headed mode), so you can watch what it's doing. If you'd rather it run invisibly in the background, add `"--headless"` as another line in the `command` list.
 
@@ -131,10 +131,10 @@ Watch a browser window open and move by itself. Official docs: [playwright.dev/m
 
 ## The mental model
 
-You've now seen the full picture of opencode's superpowers:
+You've now seen the full picture of what opencode can do:
 
-- **Files** (Parts 1–3) — it edits your project.
-- **Skills** (Part 4) — it follows a packaged method you give it.
-- **MCP servers** (this part) — it can reach the outside world: live web (Exa) and real browsers (Playwright).
+- **Files** (Parts 1 to 3): it edits your project.
+- **Skills** (Part 4): it follows a packaged method you give it.
+- **MCP servers** (this part): it can reach the outside world: live web (Exa) and real browsers (Playwright).
 
 Whatever AI tool you pick up later, these three ideas (the agent, the skill, the connector) are the ones that keep showing up. The setup differs slightly per tool, but the *shape* is always the same.

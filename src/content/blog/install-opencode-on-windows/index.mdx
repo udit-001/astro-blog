@@ -29,9 +29,9 @@ The commands can look like a foreign language, but they all mean the same simple
 
 OpenCode is the tool you'll use. To run it, your computer needs three supporting pieces first. Think of them as ingredients for a recipe:
 
-- **Windows Terminal** — the window where you'll talk to OpenCode ([download](https://aka.ms/terminal))
-- **Node.js** — the engine that runs OpenCode's code ([download](https://nodejs.org))
-- **Git** — a behind-the-scenes helper OpenCode uses to keep track of changes safely ([download](https://git-scm.com))
+- **Windows Terminal**: the window where you'll talk to OpenCode ([download](https://aka.ms/terminal))
+- **Node.js**: the engine that runs OpenCode's code ([download](https://nodejs.org))
+- **Git**: a behind-the-scenes helper OpenCode uses to keep track of changes safely ([download](https://git-scm.com))
 
 You won't download these by hand. A built-in Windows tool called **winget** (an app store for your terminal) installs them all with one command each ([more on winget](https://learn.microsoft.com/en-us/windows/package-manager/)).
 
@@ -89,7 +89,7 @@ winget install --id Git.Git --accept-source-agreements --accept-package-agreemen
 
 ## Step 5: Install OpenCode
 
-Now the main event:
+Now the main step:
 
 ```bash
 npm install -g opencode-ai
@@ -119,11 +119,11 @@ When you first run it, opencode walks you through connecting a model provider. Y
 
 Think of OpenCode as a helpful colleague you can hand tasks to in plain English. Some things data people actually use it for:
 
-- **Explain something** — *"Explain this SQL query to me in plain terms."*
-- **Fix something** — *"My query is slow, look at it and tell me why."*
-- **Crunch data** — *"Here's a CSV of sales. Clean it up and tell me my top 5 customers."*
-- **Write formulas** — *"Write me an Excel formula that finds the average sales per region."*
-- **Turn ideas into code** — *"Write a short script that reads this spreadsheet and summarizes it."*
+- **Explain something**: *"Explain this SQL query to me in plain terms."*
+- **Fix something**: *"My query is slow, look at it and tell me why."*
+- **Crunch data**: *"Here's a CSV of sales. Clean it up and tell me my top 5 customers."*
+- **Write formulas**: *"Write me an Excel formula that finds the average sales per region."*
+- **Turn ideas into code**: *"Write a short script that reads this spreadsheet and summarizes it."*
 
 ### Try a quick task
 
@@ -193,7 +193,7 @@ Then let uv fetch Python:
 uv python install 3.12
 ```
 
-All done. uv handles Python for you, no installers or path fiddling. See [docs.astral.sh/uv](https://docs.astral.sh/uv) for more.
+All done. uv handles Python for you without installers or path fiddling. See [docs.astral.sh/uv](https://docs.astral.sh/uv) for more.
 
 ## Optional: Stop Python from opening the Microsoft Store
 
@@ -224,9 +224,9 @@ Remove-Item "$env:LOCALAPPDATA\Microsoft\WindowsApps\python*.exe"
 
 Most issues share the same simple cause and fix:
 
-1. **"X is not recognized"** — close your terminal and open a brand new window, then retry. Windows only picks up newly installed tools in fresh windows.
+1. **"X is not recognized"**: close your terminal and open a brand new window, then retry. Windows only picks up newly installed tools in fresh windows.
 2. **Still nothing? Reboot.** Restart your computer once and retry; this makes sure Windows notices everything it installed.
-3. **`opencode` still not recognized after that** — this is less common; search the web for "opencode npm not recognized Windows" for a quick targeted fix.
-4. **Anything else** — OpenCode's docs at [opencode.ai/docs](https://opencode.ai/docs) cover this in more depth.
+3. **`opencode` still not recognized after that**: this is less common; search the web for "opencode npm not recognized Windows" for a quick targeted fix.
+4. **Anything else**: OpenCode's docs at [opencode.ai/docs](https://opencode.ai/docs) cover this in more depth.
 
 Remember: nothing here can permanently break your computer. If a step doesn't work, the worst case is you close the window and try again. There's nothing to be afraid of.
