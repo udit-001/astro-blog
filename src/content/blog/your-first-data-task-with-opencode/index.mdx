@@ -1,6 +1,6 @@
 ---
 title: "Part 3: Your First Real Data Task with opencode"
-description: "Walk one real data task end to end — opencode cleans a messy CSV and answers a question about it"
+description: "Walk one real data task end to end, with opencode cleaning a messy CSV and answering a question about it"
 date: 2026-08-16
 tags:
   - opencode
@@ -13,11 +13,11 @@ import Callout from "@components/Callout.astro";
 
 In [Part 1](/blog/from-chatgpt-to-opencode/) you saw the difference between asking a chatbot and handing work to an agent. In [Part 2](/blog/install-opencode-on-windows/) you got opencode installed. This is **Part 3**: let's actually do a real piece of work together, the kind you'd recognise from your day-to-day.
 
-No tl;dr here — just follow along and you'll have something real done by the end.
+No tl;dr here. Just follow along and you'll have something real done by the end.
 
 ## The task
 
-Imagine you've been handed a messy CSV of sales — the kind that arrives with inconsistent columns, blank rows, mixed date formats, and a stray "NA" or two. You want two things:
+Imagine you've been handed a messy CSV of sales (the kind that arrives with inconsistent columns, blank rows, mixed date formats, and a stray "NA" or two). You want two things:
 
 1. **A cleaned version** of the file.
 2. **An answer** to a question: *who are the top 5 customers by region?*
@@ -26,12 +26,12 @@ Any spreadsheet wonk has done this by hand dozens of times. It's fiddly. Let's h
 
 ## Step 1: Put your file where opencode can see it
 
-Create a folder on your computer for this little project — call it something like `sales-task` — and drop your CSV inside it. Then:
+Create a folder on your computer for this little project (call it something like `sales-task`) and drop your CSV inside it. Then:
 
 1. Open a terminal in that folder (in Windows Terminal / Git Bash, `cd` into it).
 2. Run `opencode` and press Enter.
 
-When opencode is running from that folder, it can see and edit the files in it. That's the setup — nothing more.
+When opencode is running from that folder, it can see and edit the files in it. Done — the setup is just that.
 
 ## Step 2: Hand it the work (the prompt)
 
@@ -47,14 +47,14 @@ customers are by region.
 Notice what you didn't do:
 
 - You didn't explain *how* to clean it (it can read the file and figure it out).
-- You didn't say which tool to use (Python vs formulas — you don't care).
+- You didn't say which tool to use (Python vs formulas, you don't care).
 - You did say *what done looks like*: a saved `sales_clean.csv` plus a top-5-by-region answer.
 
 That's the agent-style prompt from [Part 1](/blog/from-chatgpt-to-opencode/), in action.
 
 ## Step 3: Watch, then check its work
 
-OpenCode will probably ask a clarifying question or two, pick an approach, and get to it. Depending on the file, it may have to stop and check something with you — that's normal and fine.
+OpenCode will probably ask a clarifying question or two, pick an approach, and get to it. Depending on the file, it may have to stop and check something with you; that's normal and fine.
 
 When it says it's done, don't just say "okay." **Verify:**
 
@@ -70,7 +70,7 @@ This check-you've-always-done-yourself is the part you keep. The agent did the s
 
 ## Step 4: Ask one follow-up
 
-Now lean on it a bit more — this is where the collaboration gets fun. Try:
+Now lean on it a bit more; this is where the collaboration gets fun. Try:
 
 > *"Good. Now turn the top-5 result into an Excel formula I can paste into a PivotTable."*
 
@@ -83,7 +83,7 @@ You now have a repeatable pattern: **state the goal → let it work → check th
 ## What you just learned
 
 - The agent did hands-on file work, not just talk.
-- You directed the outcome and verified it — your judgment mattered.
+- You directed the outcome and verified it; your judgment mattered.
 - You can iterate and refine without starting over.
 
 Where to next? The [opencode docs](https://opencode.ai/docs) have much more depth. But you've already crossed the threshold that matters: you used an AI agent to do actual work, your way.

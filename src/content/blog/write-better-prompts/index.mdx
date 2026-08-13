@@ -1,6 +1,6 @@
 ---
 title: "Part 6: Write Better Prompts for Your AI Agent"
-description: "Five practical ways to phrase your instructions so your AI agent gets them right — the first time"
+description: "Five practical ways to phrase your instructions so your AI agent gets them right, the first time"
 date: 2026-08-13
 tags:
   - opencode
@@ -11,7 +11,7 @@ tags:
 
 import Callout from "@components/Callout.astro";
 
-Over this series you've handed opencode copy-paste prompts — [Part 3's CSV task](/blog/your-first-data-task-with-opencode/), and the [setup prompts in Part 5](/blog/extend-opencode-with-mcp/). They worked. This is **Part 6**: learning to write your *own* prompts, so you're not dependent on examples. Prompting is the skill you'll use on literally every task — worth taking twenty minutes to get right.
+Over this series you've handed opencode copy-paste prompts ([Part 3's CSV task](/blog/your-first-data-task-with-opencode/) and the [setup prompts in Part 5](/blog/extend-opencode-with-mcp/)). They worked. This is **Part 6**: learning to write your *own* prompts, so you're not dependent on examples. Prompting is the skill you'll use on literally every task; worth taking twenty minutes to get right.
 
 <Callout type="info">
   A good prompt is just a clear instruction. These five ideas make your instructions much more likely to land the first time. They're the same ones behind every good prompt you've seen in this series.
@@ -23,7 +23,7 @@ Over this series you've handed opencode copy-paste prompts — [Part 3's CSV tas
 
 ## 1. Say what "done" looks like
 
-The most common reason an AI gives a half-finished answer is that "finished" was never defined. Give it a concrete target — name the what, not a vibe.
+The most common reason an AI gives a half-finished answer is that "finished" was never defined. Give it a concrete target: name the what, not a vibe.
 
 - Weak: *"Clean up this data."*  → done is fuzzy, so the agent stops whenever it feels like it.
 - Strong: *"Drop empty rows, fix the date formats, and **save it as sales_clean.csv**."*
@@ -32,10 +32,10 @@ The moment you name the output file (or the final sentence, or the number of row
 
 ## 2. Say what you want, not what you don't
 
-Telling the agent what *not* to do often backfires — "don't write long comments" plants the image of long comments. Describe the behaviour you want instead.
+Telling the agent what *not* to do often backfires: "don't write long comments" plants the image of long comments. Describe the behaviour you want instead.
 
 - Weak: *"Don't make it overly complicated."*
-- Strong: *"Keep it simple — one approach, minimal steps."*
+- Strong: *"Keep it simple, one approach, minimal steps."*
 
 State the positive target. If you must include a boundary, pair it with the positive: *"Use Excel formulas, not Python, for this part."*
 
@@ -45,16 +45,16 @@ If a task has more than one part, list them top to bottom. The agent follows ord
 
 > *1. Fix the date formats. 2. Drop empty rows and handle 'NA'. 3. Give me a top-5-by-region summary.*
 
-Numbered steps turn a vague request into a little checklist the agent can mark off — and it's easier for you to see which step it skipped.
+Numbered steps turn a vague request into a little checklist the agent can mark off, and it's easier for you to see which step it skipped.
 
 ## 4. Use one sharp word to anchor it
 
 A single vivid word sticks better than a sentence of mild direction. Think of it as a handle the agent carries through the work.
 
-- "…make it *tight*" — instead of "clean, efficient, no wasted lines."
-- "…be *relentless* about finding errors" — instead of "please check carefully and thoroughly."
+- "…make it *tight*" instead of "clean, efficient, no wasted lines."
+- "…be *relentless* about finding errors" instead of "please check carefully and thoroughly."
 
-Pick a word that already means something in your head, and reuse it across prompts — the agent picks up the pattern.
+Pick a word that already means something in your head, and reuse it across prompts; the agent picks up the pattern.
 
 ## 5. Keep it short and specific
 
@@ -73,15 +73,15 @@ And the same task, with all five ideas applied:
 > *Here's the sales CSV in this folder. 1) Drop empty rows. 2) Fix dates to YYYY-MM-DD. 3) Flag any totals that look wrong. Save the cleaned file as sales_clean.csv and tell me the top 5 customers by region. Keep it simple.*
 
 <Callout type="tip">
-  **Loose ends are fine.** You don't need perfect prompts — you need *decent* ones, because the best prompting skill is the follow-up: *"No, I meant that region should be included — redo it."* Iteration is part of the process, not a failure of it.
+  **Loose ends are fine.** You don't need perfect prompts; you need *decent* ones, because the best prompting skill is the follow-up: *"No, I meant that region should be included, redo it."* Iteration is part of the process, not a failure of it.
 </Callout>
 
 ## A small task to make it stick
 
-Write your own prompt for a task you actually do — your monthly report, a recurring cleanup, a question you ask every week. Apply the five ideas, run it in opencode, and see which ones changed the result. That's the whole exercise.
+Write your own prompt for a task you actually do: your monthly report, a recurring cleanup, or a question you ask every week. Apply the five ideas, run it in opencode, and see which ones changed the result. Running it once tells you more than reading about it twice.
 
 <Callout type="info">
-  **Feeling overwhelmed? Just ask it to grill you.** If a task feels tangled, don't fight to word a perfect prompt — say *"grill me on this task"* and opencode will ask the questions it needs to nail down the goal. (Need the [grilling skill](/prompts/install-grilling-skill/)? It's installed in [Part 4](/blog/teach-opencode-skills/).)
+  **Feeling overwhelmed? Just ask it to grill you.** If a task feels tangled, don't fight to word a perfect prompt; say *"grill me on this task"* and opencode will ask the questions it needs to nail down the goal. (Need the [grilling skill](/prompts/install-grilling-skill/)? It's installed in [Part 4](/blog/teach-opencode-skills/).)
 </Callout>
 
-For a deeper, more technical guide to writing instructions agents follow well — the kind used when you author skills or project docs — see the opencode [skills docs](https://opencode.ai/docs/skills/).
+For a deeper, more technical guide to writing instructions agents follow well (the kind used when you author skills or project docs), see the opencode [skills docs](https://opencode.ai/docs/skills/).

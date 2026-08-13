@@ -1,6 +1,6 @@
 ---
 title: "Part 2: Install OpenCode on Windows"
-description: "Get OpenCode installed and have your first chat — with winget, no coding background needed"
+description: "Get OpenCode installed and have your first chat with winget, no coding background needed"
 date: 2026-08-17
 tags:
   - opencode
@@ -11,7 +11,7 @@ tags:
 
 import Callout from "@components/Callout.astro";
 
-[OpenCode](https://opencode.ai) is an AI assistant that lives inside a terminal window and can help you with data work, writing, and coding tasks — you talk to it, and it answers. If you've never used a terminal or installed anything by typing commands, this guide is for you. Every step is in plain language, and you just copy and paste.
+[OpenCode](https://opencode.ai) is an AI assistant that lives inside a terminal window and can help you with data work, writing, and coding tasks. You talk to it and it answers. If you've never used a terminal or installed anything by typing commands, this guide is for you. Every step is in plain language, and you just copy and paste.
 
 This guide is **Part 2** of a short series introducing you to AI-assisted coding. [Part 1](/blog/from-chatgpt-to-opencode/) explained how an AI agent differs from a chatbot; this post gets you set up and having your first chat. [Part 3](/blog/your-first-data-task-with-opencode/) walks through a real first task.
 
@@ -27,7 +27,7 @@ The commands can look like a foreign language, but they all mean the same simple
 
 ## What we're installing, and why
 
-OpenCode is the tool you'll use. To run it, your computer needs three supporting pieces first — think of them as ingredients for a recipe:
+OpenCode is the tool you'll use. To run it, your computer needs three supporting pieces first. Think of them as ingredients for a recipe:
 
 - **Windows Terminal** — the window where you'll talk to OpenCode ([download](https://aka.ms/terminal))
 - **Node.js** — the engine that runs OpenCode's code ([download](https://nodejs.org))
@@ -45,7 +45,7 @@ You won't download these by hand. A built-in Windows tool called **winget** (an 
 2. Type **Terminal** in the search box.
 3. Click **Windows Terminal** (or **Terminal**).
 
-Leave this window open — we'll use it for every step. If Windows asks for permission, click **Yes**.
+Leave this window open; we'll use it for every step. If Windows asks for permission, click **Yes**.
 
 ## Step 2: Make sure winget is up to date
 
@@ -73,7 +73,7 @@ You'll see a progress bar while it downloads. `--id Microsoft.WindowsTerminal` i
 
 ## Step 4: Install Node.js and Git
 
-Now the engine and the helper. Run these one at a time — paste the first line, press Enter, wait for it to finish, then the second:
+Now the engine and the helper. Run these one at a time: paste the first line, press Enter, wait for it to finish, then the second:
 
 ```bash
 winget install --id OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements
@@ -95,23 +95,21 @@ Now the main event:
 npm install -g opencode-ai
 ```
 
-`npm` is a tool that comes free with Node.js (installed in Step 4) and is how OpenCode is handed out. `-g` just means "installed once, available everywhere." This may take a minute or two — that's normal.
+`npm` is a tool that comes free with Node.js (installed in Step 4) and is how OpenCode is handed out. `-g` just means "installed once, available everywhere." This may take a minute or two (that's normal).
 
 ## Step 6: Check it worked
 
-Open a **new** terminal window (close the old one first), then:
+Open a new terminal window (close the old one first), then:
 
 ```bash
 opencode --version
 ```
 
-If you see a version number — something like `0.1.0` — you're done. **OpenCode is now installed and working.**
-
----
+If you see a version number (something like `0.1.0`), you're done. **OpenCode is now installed and working.**
 
 ## Now that OpenCode is running, what can you do?
 
-Here's the encouraging part: you don't need any planning to start. Just type `opencode` in a terminal and press Enter:
+You don't need any planning to start. Just type `opencode` in a terminal and press Enter:
 
 ```bash
 opencode
@@ -139,9 +137,9 @@ For more ideas, OpencCode's own docs at [opencode.ai/docs](https://opencode.ai/d
 
 ### Give it a memory of past sessions (optional)
 
-By default, OpenCode only sees the conversation in front of it. A free plugin called **session search** gives it a memory: once installed, OpenCode can list your past sessions, search them, and read them back — so *"pick up where we left off yesterday"* actually works.
+By default, OpenCode only sees the conversation in front of it. A free plugin called **session search** gives it a memory: once installed, OpenCode can list your past sessions, search them, and read them back, so *"pick up where we left off yesterday"* actually works.
 
-Installing a plugin looks just like any other task — you paste a plain-English instruction and it does the rest. With OpenCode still running, paste this:
+Installing a plugin looks just like any other task: you paste a plain-English instruction and it does the rest. With OpenCode still running, paste this:
 
 ```text
 Install the opencode-session-search plugin on my machine by downloading and
@@ -156,7 +154,7 @@ installed and ready.
 ```
 
 <Callout type="tip">
-  On Windows this installer needs **Git Bash** — the helper that came with Git back in Step 4. If OpenCode's terminal says `bash` isn't recognized, follow the [optional Git Bash section](#optional-make-git-bash-your-default-shell) further down, or add one line to your instruction: *"run the install command in Git Bash and tell me the result."*
+  On Windows this installer needs **Git Bash**, the helper that came with Git back in Step 4. If OpenCode's terminal says `bash` isn't recognized, follow the [optional Git Bash section](#optional-make-git-bash-your-default-shell) further down, or add one line to your instruction: *"run the install command in Git Bash and tell me the result."*
 </Callout>
 
 OpenCode loads plugins when it starts, so one last step: **close OpenCode (type `/exit`, or press `Ctrl+C` twice), then run `opencode` again.** The new memory tools are ready the moment it opens.
@@ -167,13 +165,11 @@ To check it worked, ask it:
 
 If it returns a list (or says there are none yet), the plugin is live. From now on you can say things like *"continue the session where we worked on the sales data"* and it can find it.
 
----
-
 ## Optional: Make Git Bash your default shell
 
-When you installed Git in Step 4, you also got something called **Git Bash** — a version of the terminal that understands helper commands some AI features use. It comes free with Git, so nothing new to install.
+When you installed Git in Step 4, you also got something called **Git Bash**, a version of the terminal that understands helper commands some AI features use. It comes free with Git, so nothing new to install.
 
-It's optional, but recommended if you plan to use OpenCode regularly, because a few things work more smoothly in it. If you'd rather not change how your terminal behaves, skip this section — everything above still works.
+It's optional, but recommended if you plan to use OpenCode regularly, because a few things work more smoothly in it. If you'd rather not change how your terminal behaves, skip this section; everything above still works.
 
 To switch:
 
@@ -181,11 +177,11 @@ To switch:
 2. Click **Startup** in the left menu.
 3. Under **Default profile**, choose **Git Bash**.
 
-That's it — new terminal windows now open in Git Bash. For more on Windows Terminal, see [the official Windows Terminal docs](https://learn.microsoft.com/en-us/windows/terminal/).
+New terminal windows now open in Git Bash. For more on Windows Terminal, see [the official Windows Terminal docs](https://learn.microsoft.com/en-us/windows/terminal/).
 
 ## Optional: Install Python (via uv)
 
-If you want to do Python work too, there's a tidy helper called **uv** that installs and organizes Python for you. Purely optional — skip if you only came for OpenCode.
+If you want to do Python work too, there's a tidy helper called **uv** that installs and organizes Python for you. Purely optional; skip if you only came for OpenCode.
 
 ```bash
 winget install --id astral-sh.uv --accept-source-agreements --accept-package-agreements
@@ -197,17 +193,17 @@ Then let uv fetch Python:
 uv python install 3.12
 ```
 
-That's all. uv handles Python for you, no installers or path fiddling. See [docs.astral.sh/uv](https://docs.astral.sh/uv) for more.
+All done. uv handles Python for you, no installers or path fiddling. See [docs.astral.sh/uv](https://docs.astral.sh/uv) for more.
 
 ## Optional: Stop Python from opening the Microsoft Store
 
-On some Windows setups, typing `python` opens a Microsoft Store page instead of running Python, because of two small decoy shortcuts (`python.exe` and `python3.exe`). If that ever happens to you, turn them off in Settings — no commands needed:
+On some Windows setups, typing `python` opens a Microsoft Store page instead of running Python, because of two small decoy shortcuts (`python.exe` and `python3.exe`). If that ever happens to you, turn them off in Settings (no commands needed):
 
 1. Open **Settings** (press the **Windows key**, then click **Settings**).
 2. Go to **Apps** → **Advanced app settings** → **App execution aliases**.
-3. Turn **off** both **Python** and **Python3**.
+3. Turn off both **Python** and **Python3**.
 
-That's it — typing `python` will now use your real Python instead of opening the Store.
+Typing `python` now uses your real Python instead of opening the Store.
 
 <details>
 <summary>Prefer a command? (more technical)</summary>
@@ -221,17 +217,15 @@ Remove-Item "$env:LOCALAPPDATA\Microsoft\WindowsApps\python*.exe"
 </details>
 
 <Callout type="warning">
-  Either way, only touch the two Python aliases/files. Do **not** delete the whole `WindowsApps` folder — other harmless shortcuts live there, and breaking them causes problems elsewhere.
+  Either way, only touch the two Python aliases/files. Do **not** delete the whole `WindowsApps` folder; other harmless shortcuts live there, and breaking them causes problems elsewhere.
 </Callout>
-
----
 
 ## If something goes wrong
 
 Most issues share the same simple cause and fix:
 
-1. **"X is not recognized"** — close your terminal and open a **brand new** window, then retry. Windows only picks up newly installed tools in fresh windows.
-2. **Still nothing? Reboot.** Restart your computer once and retry — this makes sure Windows notices everything it installed.
+1. **"X is not recognized"** — close your terminal and open a brand new window, then retry. Windows only picks up newly installed tools in fresh windows.
+2. **Still nothing? Reboot.** Restart your computer once and retry; this makes sure Windows notices everything it installed.
 3. **`opencode` still not recognized after that** — this is less common; search the web for "opencode npm not recognized Windows" for a quick targeted fix.
 4. **Anything else** — OpenCode's docs at [opencode.ai/docs](https://opencode.ai/docs) cover this in more depth.
 
