@@ -1,6 +1,6 @@
 ---
 title: Focus — Low-Cognitive-Load Output Style
-description: "A system-prompt style for coding agents (Claude Code, pi, opencode, Codex): answer first, one decision at a time, cheap to verify, no filler."
+description: "A system-prompt style for coding agents (Claude Code, opencode, Codex): answer first, one decision at a time, cheap to verify, no filler."
 date: 2026-09-15
 tags: ["prompting", "output-style", "agents"]
 ---
@@ -9,7 +9,6 @@ A style for agents that shapes *how* they answer, not what they know. Built for 
 Paste the block below into a file and drop it where your agent reads styles:
 
 - **Claude Code** — save as `~/.claude/output-styles/focus.md` (or `.claude/output-styles/` in a repo), then pick it via `/config` → Output style.
-- **pi** — save under `styles/` of an output-styles extension, or `~/.pi/agent/output-styles/`, then `/style Focus`.
 - **opencode / Codex** — put the body (without frontmatter) in your global instructions file: `~/.config/opencode/AGENTS.md` or `~/.codex/AGENTS.md`.
 
 ```markdown
